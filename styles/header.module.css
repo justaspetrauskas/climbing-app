@@ -1,0 +1,61 @@
+.wrapper {
+  @apply fixed top-0 left-0 w-full z-[99] bg-urban_white text-urban_blue border-b border-urban_black/5 py-4;
+}
+
+.navbar {
+  @apply max-w-screen-lg lg:max-w-screen-xl 
+    grid-cols-navigation
+    px-6 lg:px-4 xl:px-0 uppercase
+    mx-auto grid items-center;
+  grid-template-areas: "logo . . navItems";
+}
+
+.logo {
+  @apply w-8 md:w-[2.8rem] z-[999] fill-current leading-4 text-xl;
+  grid-area: logo;
+}
+.logo > span {
+  @apply inline-block font-[900];
+}
+
+.navItems {
+  @apply grid grid-flow-col auto-cols-max gap-14 text-sm font-semibold;
+  grid-area: navItems;
+}
+.navItem {
+  @apply cursor-pointer relative
+   transition ease-linear duration-300;
+}
+
+.navItem > a:hover {
+  @apply text-urban_red;
+}
+
+.navLink {
+  @apply flex flex-col justify-center items-center gap-y-1;
+}
+.navLink > svg {
+  @apply hidden md:block;
+}
+
+/* dropwdown */
+.dropdownWrapper {
+  @apply bg-urban_white absolute min-w-[8rem] border 
+  border-urban_blue/10 shadow-md uppercase text-xs break-normal
+  rounded-lg  scale-y-0 transition ease-in-expo duration-300
+  top-[3.75rem] -left-1/2 overflow-hidden origin-top;
+}
+
+.dropdownWrapper-avtive {
+  @apply transition ease-out-expo scale-100 duration-300;
+}
+
+.dropdownItem {
+  @apply px-1 py-2;
+}
+.dropdownItem:not(:last-child) {
+  @apply border-b;
+}
+.dropdownItem:hover {
+  @apply bg-urban_blue/10 transition;
+}

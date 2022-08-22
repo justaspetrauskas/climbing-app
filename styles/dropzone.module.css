@@ -1,0 +1,3 @@
+.wrapper {
+  @apply border min-h-[24rem] rounded-lg flex flex-col justify-center items-center px-2;
+}

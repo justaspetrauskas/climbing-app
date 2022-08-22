@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* fonts */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+@layer base {
+  :root {
+  }
+  body {
+    @apply text-urban_black bg-urban_white font-poppins;
+  }
+  h2 {
+    @apply text-3xl font-bold;
+  }
+  label {
+    @apply font-thin tracking-wide text-urban_blue;
+  }
+}

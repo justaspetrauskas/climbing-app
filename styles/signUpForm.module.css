@@ -1,0 +1,58 @@
+.wrapper {
+  @apply items-center m-0 p-0 flex flex-grow flex-col justify-center;
+}
+.content {
+  @apply grow flex items-center flex-col justify-center;
+}
+.content > div {
+  @apply px-8 pt-8 pb-0 min-w-[416px] w-full;
+}
+
+.formNav {
+  @apply lg:absolute lg:top-0 lg:left-0 
+  flex flex-row grow-0 items-center 
+  justify-end px-12 pt-8 w-full justify-self-start 
+  gap-x-2 ease-in duration-300;
+}
+
+.formNav a {
+  @apply text-urban_lightBlue ease-in duration-300 transition-all;
+}
+
+.formNav a:hover {
+  @apply underline;
+}
+
+.content > div > h2,
+.content .formInput,
+.content .authOptions {
+  @apply mb-8;
+}
+
+.formInput {
+  @apply bg-gray-50 border border-gray-300 outline-0 ease-in duration-300
+ text-sm rounded-lg
+    block w-full p-2.5
+     dark:bg-gray-700 dark:border-gray-600
+      dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+
+.formInput:focus,
+.formInput:focus-visible,
+.formInput:hover {
+  @apply ring-urban_blue/60 ring-offset-[0.3px] ring-2 shadow-[0_0px_0px_5px_rgba(0,0,0,0.3)] shadow-blue-500/20 bg-white font-semibold;
+}
+
+.formInputLabel {
+  @apply block mb-2 text-sm dark:text-gray-300;
+}
+.formInputLabel::first-letter {
+  @apply uppercase;
+}
+
+.submitButton {
+  @apply bg-urban_blue text-white px-4 py-2 transition-colors text-sm rounded-lg font-semibold ease-in duration-300;
+}
+.submitButton:hover {
+  @apply bg-urban_blue/90;
+}

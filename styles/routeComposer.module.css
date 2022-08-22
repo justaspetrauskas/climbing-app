@@ -1,0 +1,7 @@
+.wrapper {
+  @apply relative max-w-sm h-24 w-full;
+}
+
+.image-wrapper {
+  @apply w-full absolute h-screen top-0 left-0;
+}
