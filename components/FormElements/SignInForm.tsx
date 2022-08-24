@@ -1,13 +1,5 @@
 import Link from "next/link";
-import {
-  useSession,
-  getProviders,
-  signIn,
-  signOut,
-  LiteralUnion,
-  ClientSafeProvider,
-} from "next-auth/react";
-import { BuiltInProviderType } from "next-auth/providers";
+
 
 import React, { useEffect, useState } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
@@ -67,7 +59,7 @@ const SignInForm = () => {
           <h2 className="text-urban_blue ">Sign in to Urban Crush</h2>
           <div className={style.authOptions}>
             {/* google auth */}
-            <IconButton />
+            <IconButton type="google" />
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* username */}

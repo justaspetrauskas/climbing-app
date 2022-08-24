@@ -1,0 +1,17 @@
+.input-wrapper {
+  @apply flex flex-row gap-x-1 items-center justify-center;
+}
+
+.coordinates-input-wrapper {
+  @apply flex flex-col items-start my-2;
+}
+
+.coordinates-input {
+  @apply flex flex-row gap-x-1 bg-white 
+  rounded-md px-2 py-0.5 
+  text-urban_blue;
+}
+
+.coordinates-input input:focus-visible {
+  @apply outline-none;
+}

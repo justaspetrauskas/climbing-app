@@ -12,7 +12,17 @@ import {
 } from "next-auth/react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
-const IconButton = ({}) => {
+interface IconButtonProps {
+  type: "google" | "custom";
+  children?: React.ReactNode;
+  clickHandler?: () => void;
+}
+
+const IconButton = ({
+  type = "google",
+  children,
+  clickHandler,
+}: IconButtonProps) => {
   // useEffect(() => {
   //   const getProviders = async () => {
   //     let providers = await getProviders();
@@ -20,12 +30,23 @@ const IconButton = ({}) => {
   //   };
   //   getProviders();
   // }, []);
-
-  return (
-    <button className={style.IconButton} onClick={() => signIn("google")}>
-      <FcGoogle size={24} />
-    </button>
-  );
+  if (type === "google") {
+    return (
+      <button className={style.IconButton} onClick={() => signIn("google")}>
+        <FcGoogle size={24} />
+      </button>
+    );
+  } else {
+    return (
+      <button
+        className={style.IconButton}
+        title="locate me"
+        onClick={clickHandler}
+      >
+        {children}
+      </button>
+    );
+  }
 };
 
 export default IconButton;

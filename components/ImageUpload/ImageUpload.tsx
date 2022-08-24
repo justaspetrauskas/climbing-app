@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import style from "../../styles/imageUpload.module.css";
 import DropZone from "../DropZone/DropZone";
+import RouteLocation from "../RouteLocation/RouteLocation";
 
 const ImageUpload = () => {
   const {
@@ -15,6 +16,7 @@ const ImageUpload = () => {
   return (
     <div className={style.wrapper}>
       <DropZone />
+      <RouteLocation />
       {/* <form action=""></form>
       ImageUpload */}
     </div>
