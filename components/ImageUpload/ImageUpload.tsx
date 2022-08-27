@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { selectImageUploadState } from "../../redux/store";
 import style from "../../styles/imageUpload.module.css";
 import DropZone from "../DropZone/DropZone";
+import ImageCropModal from "../ImageCropModal/ImageCropModal";
 import RouteLocation from "../RouteLocation/RouteLocation";
 
 const ImageUpload = () => {
@@ -13,10 +16,22 @@ const ImageUpload = () => {
   } = useForm({
     mode: "onChange", // "onChange"
   });
+  const { imagePreview } = useSelector(selectImageUploadState);
+
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
     <div className={style.wrapper}>
-      <DropZone />
-      <RouteLocation />
+      <DropZone openModal={openModal} />
+      {/* do it as overlay */}
+      {modalIsOpen && <ImageCropModal closeModal={closeModal} />}
       {/* <form action=""></form>
       ImageUpload */}
     </div>

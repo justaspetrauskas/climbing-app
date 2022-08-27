@@ -7,8 +7,10 @@ import style from "../../styles/routeComponent.module.css";
 import { FaLocationArrow } from "react-icons/fa";
 import { setRouteLocation } from "../../redux/slices/newRouteReducer";
 import { selectNewRouteState } from "../../redux/store";
+import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
+import { setCurrentLocation } from "../../redux/slices/mapLocationReducer";
 
-const validLatitude = new RegExp("^[-+]?([1-8]?[1-9]|[1-9]0)\\.{1}\\d{1,6}$");
+const validLatitude = new RegExp("^[-+]?([1-8]?[1-9]|[1-9]0)\\.{1}\\d{1,18}$");
 const validLongitude = new RegExp(
   "^-?(?:1[0-7]|[1-9])?\\d(?:\\.\\d{1,18})?|180(?:\\.0{1,18})?$"
 );
@@ -17,24 +19,35 @@ const RouteLocation = () => {
   const dispatch = useDispatch();
   const { routeLocation } = useSelector(selectNewRouteState);
 
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_KEY!,
+    libraries: ["places"],
+  });
+
   const [latitude, setLatitude] = useState<string>(" ");
   const [longitude, setLongitude] = useState<string>(" ");
+  const [autocomplete, setAutocomplete] =
+    useState<google.maps.places.Autocomplete | null>(null);
 
   useEffect(() => {
-    console.log(routeLocation);
+    if (routeLocation) {
+      setLatitude(routeLocation.lat.toString());
+      setLongitude(routeLocation.lng.toString());
+    }
   }, [routeLocation]);
 
   useEffect(() => {
     // validate latitude
     const isValidLat = validLatitude.test(latitude);
-    // console.log(isValidLat);
-    const isValidLng = validLongitude.test(longitude);
-    console.log("lng is valid", isValidLng);
+
     // validate longitude
+    const isValidLng = validLongitude.test(longitude);
+
     // if both are valid store to redux as numbers
     if (isValidLng && isValidLat) {
       dispatch(setRouteLocation({ lat: +latitude, lng: +longitude }));
     }
+    // show error message
   }, [latitude, longitude]);
 
   const getUsersLocation = () => {
@@ -58,17 +71,14 @@ const RouteLocation = () => {
       .replace(/,/g, ".");
 
     const dotValidation = new RegExp("^(?!\\.)(?!.*\\.\\.)");
+    const isValidDot = dotValidation.test(inputValue);
 
     switch (type) {
       case "latitude":
-        const isValidLat = dotValidation.test(inputValue);
-        if (isValidLat) {
-          setLatitude(inputValue);
-        }
-
+        isValidDot && setLatitude(inputValue);
         break;
       case "longitude":
-        setLongitude(e.target.value);
+        isValidDot && setLongitude(e.target.value);
         break;
     }
   };
@@ -78,39 +88,72 @@ const RouteLocation = () => {
     // if not- show error message
   };
 
-  return (
-    <div className={style.wrapper}>
-      {/* coordinates input */}
-      <div className={style["input-wrapper"]}>
-        <div className={style["coordinates-input-wrapper"]}>
-          <div className={style["coordinates-input"]}>
-            <label>Latitude: </label>
-            <input
-              placeholder={"lat: "}
-              value={latitude.length > 0 ? latitude : routeLocation!.lat}
-              maxLength={20}
-              onChange={(e) => cordinateChangeHandler("latitude", e)}
-            />
-            <label>Longitude: </label>
-            <input
-              placeholder={"lng:"}
-              value={longitude}
-              maxLength={20}
-              onChange={(e) => cordinateChangeHandler("longitude", e)}
-            />
-          </div>
-        </div>
+  const onPlaceChanged = () => {
+    if (autocomplete !== null) {
+      console.log(autocomplete.getPlace());
+    } else {
+      console.log("Autocomplete is not loaded yet!");
+    }
+  };
 
-        <IconButton type="custom" clickHandler={getUsersLocation}>
-          <FaLocationArrow size={14} />
-        </IconButton>
-        <IconButton type="custom" clickHandler={getInputLocation}>
-          <FaLocationArrow size={14} />
-        </IconButton>
+  //   useEffect(() => {
+  //     if (autocomplete) {
+  //       const place = autocomplete.getPlace();
+  //       console.log(place);
+  //       if (place) {
+  //         const { location } = place!.geometry!;
+  //         console.log(location!.lng(), location!.lat());
+  //         dispatch(
+  //           setCurrentLocation({ lat: location!.lat(), lng: location!.lng() })
+  //         );
+  //       }
+  //     }
+  //   }, [autocomplete]);
+
+  if (isLoaded) {
+    return (
+      <div className={style.wrapper}>
+        {/* coordinates input */}
+        {/* <Autocomplete
+          onLoad={(autocomplete) => setAutocomplete(autocomplete)}
+          onPlaceChanged={onPlaceChanged}
+        >
+          <input type="text" placeholder="Place" />
+        </Autocomplete> */}
+
+        <div className={style["input-wrapper"]}>
+          <div className={style["coordinates-input-wrapper"]}>
+            <div className={style["coordinates-input"]}>
+              <label>Latitude: </label>
+              <input
+                placeholder={"lat: "}
+                value={latitude}
+                maxLength={20}
+                onChange={(e) => cordinateChangeHandler("latitude", e)}
+              />
+              <label>Longitude: </label>
+              <input
+                placeholder={"lng:"}
+                value={longitude}
+                maxLength={20}
+                onChange={(e) => cordinateChangeHandler("longitude", e)}
+              />
+            </div>
+          </div>
+
+          <IconButton type="custom" clickHandler={getUsersLocation}>
+            <FaLocationArrow size={14} />
+          </IconButton>
+          <IconButton type="custom" clickHandler={getInputLocation}>
+            <FaLocationArrow size={14} />
+          </IconButton>
+        </div>
+        <MapComponent />
       </div>
-      <MapComponent />
-    </div>
-  );
+    );
+  } else {
+    return <div>Loading...</div>;
+  }
 };
 
 export default RouteLocation;

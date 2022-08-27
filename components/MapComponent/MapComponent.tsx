@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import style from "../../styles/mapComponent.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { selectNewRouteState } from "../../redux/store";
+import { selectMapLocationState, selectNewRouteState } from "../../redux/store";
 import { setRouteLocation } from "../../redux/slices/newRouteReducer";
 
 const containerStyle = {
@@ -20,57 +20,56 @@ const mapOptions = {
   streetViewControl: false,
   mapTypeControl: false,
   fullScreenControl: false,
+  minZoom: 8,
+  maxZoom: 24,
 };
 
 const MapComponent = () => {
   const dispatch = useDispatch();
   const { routeLocation } = useSelector(selectNewRouteState);
+
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
   useEffect(() => {
-    if (routeLocation && map) {
-      const { lng, lat } = routeLocation;
-
-      map.panTo(routeLocation);
+    if (map) {
+      if (routeLocation) {
+        map.panTo(routeLocation);
+      }
     }
   }, [routeLocation]);
 
   // load google script which loads the map
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_KEY!,
-  });
+  //   const { isLoaded } = useJsApiLoader({
+  //     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_KEY!,
+  //   });
 
   const mapClickHandler = (e: google.maps.MapMouseEvent) => {
-    const lat = e.latLng;
-    dispatch(setRouteLocation({ lng: lat!.lng(), lat: lat!.lat() }));
+    const coord = e.latLng;
+    dispatch(setRouteLocation({ lng: coord!.lng(), lat: coord!.lat() }));
   };
 
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <div className={style.wrapper}>
-        {/* map components */}
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-          options={mapOptions}
-          onClick={mapClickHandler}
-          onLoad={(map) => setMap(map)}
-          //   onUnmount={onUnmount}
-        >
-          {/* Child components, such as markers, info windows, etc. */}
-          {routeLocation && (
-            <Marker
-              position={routeLocation}
-              animation={google.maps.Animation.BOUNCE}
-            />
-          )}
-        </GoogleMap>
-      </div>
-    );
-  }
+  return (
+    <div className={style.wrapper}>
+      {/* map components */}
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={14}
+        options={mapOptions}
+        onClick={mapClickHandler}
+        onLoad={(map) => setMap(map)}
+        //   onUnmount={onUnmount}
+      >
+        {/* Child components, such as markers, info windows, etc. */}
+        {routeLocation && (
+          <Marker
+            position={routeLocation}
+            animation={google.maps.Animation.BOUNCE}
+          />
+        )}
+      </GoogleMap>
+    </div>
+  );
 };
 
 export default MapComponent;

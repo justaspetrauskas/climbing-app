@@ -1,7 +1,35 @@
-.wrapper {
-  @apply relative max-w-sm h-24 w-full;
+.overalay-container {
+  @apply fixed w-screen h-screen top-0 left-0 bg-urban_black/80 z-[9999]
+  flex flex-col items-center justify-center backdrop-blur-sm;
 }
 
+.wrapper {
+  @apply h-[calc(100vh*0.8)] 
+  rounded-lg
+  overflow-hidden bg-urban_white
+  max-w-[calc(100vw*0.9)] w-full lg:w-1/2
+  relative;
+}
+.header {
+  @apply flex flex-row flex-1 
+  font-bold text-xl
+  items-center justify-between border-b py-4 px-5;
+}
+.footer {
+  @apply flex flex-row flex-1 
+  font-bold text-xl
+  items-center justify-between border-b py-4 px-6;
+}
 .image-wrapper {
-  @apply w-full absolute h-screen top-0 left-0;
+  @apply relative w-full h-[82%];
+}
+
+.crop-btn {
+  @apply border border-urban_blue/40 text-base px-3 py-1 
+  text-urban_blue bg-urban_white
+  transition
+  rounded-lg;
+}
+.crop-btn:hover {
+  @apply bg-urban_blue text-urban_white;
 }
