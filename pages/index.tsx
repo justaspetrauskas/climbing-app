@@ -1,17 +1,35 @@
 import type { NextPage } from "next";
-import { useSession, signIn, signOut } from "next-auth/react";
-import clientPromise from "../lib/connection";
+import { useSession, signIn, signOut, getSession } from "next-auth/react";
+import Router, { useRouter } from "next/router";
+import clientPromise from "../lib/dbConnect";
 import Image from "next/image";
 import Google from "next-auth/providers/google";
 import Header from "../components/Header/Header";
+import { useEffect, useState } from "react";
 
 interface HomeProps {
   isConnected: boolean;
 }
 
 const Home = ({ isConnected }: HomeProps) => {
-  const { data: session } = useSession();
-  if (session) {
+  const router = useRouter();
+  // const { data: session, status } = useSession();
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const securePage = async () => {
+      const session = await getSession();
+      !session ? signIn() : setLoading(false);
+
+      console.log(session);
+    };
+
+    securePage();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  } else {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center py-2">
         <Header />
@@ -90,12 +108,12 @@ const Home = ({ isConnected }: HomeProps) => {
     );
   }
 
-  return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  );
+  // return (
+  //   <>
+  //     Not signed in <br />
+  //     <button onClick={() => signIn()}>Sign in</button>
+  //   </>
+  // );
 };
 
 export async function getServerSideProps() {

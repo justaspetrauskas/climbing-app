@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import React from "react";
-import axios from "axios";
 import { useForm, UseFormRegister } from "react-hook-form";
 import style from "../../styles/signUpForm.module.css";
 import InputField from "./InputField";
 import Error from "next/error";
+import { signIn } from "next-auth/react";
 
 export interface ValidationRules {
   required?: boolean;
@@ -19,7 +19,6 @@ const validation = {
 };
 
 const SignUpForm = () => {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -29,14 +28,38 @@ const SignUpForm = () => {
     mode: "onChange", // "onChange"
   });
 
+  const redirectToPrevPage = () => {
+    const { query, pathname } = Router;
+    Router.push("/");
+    // if (pathname === "/signup/new") {
+    //   Router.push("/");
+    // } else if (query.callbackUrl) {
+    //   Router.push(query.callBackUrl! as string);
+    // }
+    // const rediretUrl = new URL(location.href);
+  };
+
+  const loginUser = async (data: Record<string, any>) => {
+    console.log("Login user", data);
+    const res: any = await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+      callbackUrl: `${window.location.origin}`,
+    });
+
+    res.error ? console.log(res.error) : redirectToPrevPage();
+  };
+
   const onSubmit = async (data: Record<string, any>) => {
+    console.log("sign up data", data);
     try {
       const res = await fetch("/api/user/new", {
         method: "POST",
         body: JSON.stringify(data),
       });
       const postedData = await res.json();
-      console.log("Posted data", postedData);
+      await loginUser(data);
       // router.replace("/profile");
     } catch (err: any) {
       console.log(err);
@@ -55,7 +78,7 @@ const SignUpForm = () => {
         <div>
           <h2 className="text-urban_blue ">Sign up to Urban Crush</h2>
           <div className={style.authOptions}>{/* google auth */}</div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit((data) => onSubmit(data))}>
             {/* name */}
             <InputField
               inputType="text"

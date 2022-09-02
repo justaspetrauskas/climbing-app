@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import useOutsideClick from "../../lib/hooks/useOutsideClick";
 import style from "../../styles/header.module.css";
+import { signOut } from "next-auth/react";
 
 interface ProfileDropdownProps {
   state: boolean;
@@ -32,7 +33,9 @@ const ProfileDropdown = ({
         </Link>
       </li>
       <li className={style.dropdownItem}>Settings</li>
-      <li className={style.dropdownItem}>Log out</li>
+      <li className={style.dropdownItem}>
+        <button onClick={() => signOut()}>Log out</button>
+      </li>
     </ul>
   );
 };

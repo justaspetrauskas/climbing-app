@@ -1,6 +1,7 @@
 import { BuiltInProviderType, Provider } from "next-auth/providers";
+import Router from "next/router";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FcGoogle } from "react-icons/fc";
 import style from "../../styles/iconButton.module.css";
@@ -23,6 +24,13 @@ const IconButton = ({
   children,
   clickHandler,
 }: IconButtonProps) => {
+  const [redirectUrl, setRedirectUrl] = useState("http://location:3000");
+
+  useEffect(() => {
+    const callbackUrl = Router.query!.callbackUrl as string;
+    if (callbackUrl) setRedirectUrl(callbackUrl);
+  });
+
   // useEffect(() => {
   //   const getProviders = async () => {
   //     let providers = await getProviders();
@@ -32,7 +40,10 @@ const IconButton = ({
   // }, []);
   if (type === "google") {
     return (
-      <button className={style.IconButton} onClick={() => signIn("google")}>
+      <button
+        className={style.IconButton}
+        onClick={() => signIn("google", { callbackUrl: redirectUrl })}
+      >
         <FcGoogle size={24} />
       </button>
     );

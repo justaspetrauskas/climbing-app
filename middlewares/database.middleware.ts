@@ -1,4 +1,4 @@
-import dbConnect from "../lib/connection";
+import dbConnect from "../lib/dbConnect";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextHandler } from "next-connect";
 

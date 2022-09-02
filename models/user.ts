@@ -1,12 +1,12 @@
-import mongoose, { Document, model, Model, Schema } from "mongoose";
+import mongoose, { Document, model, Model } from "mongoose";
 import bcrypt from "bcrypt";
 import { AvatarGenerator } from "random-avatar-generator";
 
 const avatar = new AvatarGenerator();
-
+const Schema = mongoose.Schema;
 export interface IUser extends Document {
-  title: string;
-  emailt: string;
+  name: string;
+  email: string;
   password: string;
   tokens: {
     accessToken: string;
@@ -15,7 +15,16 @@ export interface IUser extends Document {
   avatar: string;
 }
 
-const userSchema: Schema = new Schema({
+export interface IUserDocument extends IUser, Document {}
+
+export interface IUserModel extends Model<IUser> {
+  checkCredentials: (
+    email: string,
+    password: string
+  ) => Promise<IUserDocument> | null;
+}
+
+const userSchema = new Schema<IUser, IUserModel>({
   name: {
     type: String,
     required: true,
@@ -23,9 +32,15 @@ const userSchema: Schema = new Schema({
   },
   email: {
     type: String,
-    unique: [true, "Such email already exists"],
+    unique: true,
+    required: true,
+    lowercase: true,
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please fill a valid email address",
+    ],
   },
-  password: { type: String },
+  password: { type: String, requred: true },
   tokens: {
     accessToken: { type: String },
     refreshToken: { type: String },
@@ -75,5 +90,7 @@ userSchema.statics.checkCredentials = async function (email, plainpassword) {
   } else return null;
 };
 
-const User: Model<IUser> = mongoose.models.User || model("User", userSchema);
+const User =
+  mongoose.models.UserSchema ||
+  mongoose.model<IUserDocument, IUserModel>("UserSchema", userSchema);
 export default User;
