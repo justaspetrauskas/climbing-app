@@ -10,7 +10,7 @@
   :root {
   }
   body {
-    @apply text-urban_black bg-urban_white font-poppins;
+    @apply text-urban_black bg-[#f5f7fa] font-poppins;
   }
   h2 {
     @apply text-3xl font-bold;

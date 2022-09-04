@@ -1,0 +1,46 @@
+.wrapper {
+  @apply flex flex-wrap -mx-4 md:min-h-[calc(100vh*0.6)];
+}
+.col {
+  @apply relative w-full px-4;
+}
+.progress-wrapper {
+  @apply w-full md:w-1/3 relative 
+  rounded-lg;
+}
+.progress-container {
+  @apply relative flex md:flex-col bg-urban_white
+    text-urban_black items-center justify-around
+ gap-8 h-full w-full overflow-hidden p-5 md:p-7;
+}
+
+.progress-bar {
+  @apply absolute top-1/2 left-1/2 bg-[#E8DFD8]
+  h-[3px] w-full md:h-full md:w-[3px] rounded-lg
+  -translate-x-1/2 -translate-y-1/2
+overflow-hidden;
+}
+.progress-bar--fill-vertical {
+  @apply md:block bg-urban_blue h-full w-full;
+}
+
+.progress-step {
+  @apply relative flex scale-90 bg-urban_white py-1
+  
+  transition
+  flex-row flex-nowrap items-center gap-x-1;
+}
+.progress-step--active {
+  @apply scale-125 transition;
+}
+.progress-step--completed {
+}
+.progress-step--completed > i {
+  @apply bg-lime-600 border-0 border-urban_white;
+}
+.progress-step--completed svg {
+  @apply fill-white;
+}
+.progress-step > i {
+  @apply border rounded-full p-[0.25rem] border-urban_black;
+}

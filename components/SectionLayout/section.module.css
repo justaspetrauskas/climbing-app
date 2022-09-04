@@ -1,0 +1,16 @@
+.wrapper {
+  @apply py-12 md:py-14 lg:py-20 min-h-screen flex flex-col justify-center;
+}
+.container {
+  @apply relative w-full mx-auto px-4 
+  sm:max-w-xl md:max-w-3xl lg:max-w-[960px]
+  xl:max-w-6xl;
+}
+
+header.section-header {
+  @apply mb-10;
+}
+
+.row {
+  @apply flex flex-wrap -mx-4;
+}

@@ -10,6 +10,10 @@ import PageLayout from "../../components/PageLayout/PageLayout";
 import RouteLocation from "../../components/RouteLocation/RouteLocation";
 import { selectNewRouteState } from "../../redux/store";
 import { getSession, useSession } from "next-auth/react";
+import SectionLayout from "../../components/SectionLayout/SectionLayout";
+import SectionHeader from "../../components/SectionLayout/SectionHeader";
+import SectionRow from "../../components/SectionLayout/SectionRow";
+import RouteComposer from "../../components/RouteComposer/RouteComposer";
 
 const RouteCanvas = dynamic(
   () => import("../../components/RouteCanvas/RouteCanvas"),
@@ -28,11 +32,18 @@ const NewLine = () => {
 
   return (
     <PageLayout>
-      <BodyLayout>
-        <ImageUpload />
-        <RouteLocation />
-        {routeState.imageUrl && <RouteCanvas imageUrl={routeState.imageUrl} />}
-      </BodyLayout>
+      <SectionLayout>
+        <SectionHeader>
+          <h2>Create a route</h2>
+          <p>Create your route and share with others</p>
+        </SectionHeader>
+
+        <RouteComposer />
+
+        {/* <ImageUpload /> */}
+        {/* <RouteLocation /> */}
+        {/* {routeState.imageUrl && <RouteCanvas imageUrl={routeState.imageUrl} />} */}
+      </SectionLayout>
     </PageLayout>
   );
 };

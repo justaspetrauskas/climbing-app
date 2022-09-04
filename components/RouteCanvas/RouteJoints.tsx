@@ -7,15 +7,15 @@ interface RouteJointsProps {
   canvasHeight: number;
   jointCoords: number[];
   handleDragMove: (e: any) => void;
+  handleMouseDown?: (e: any) => void;
   draggable: boolean;
 }
 const RouteJoints = ({
   jointCoords,
   circleRadius = 8,
-  canvasWidth,
-  canvasHeight,
   handleDragMove,
   draggable,
+  handleMouseDown,
 }: RouteJointsProps) => {
   const circleRef = useRef<Konva.Circle>(null);
 
@@ -28,7 +28,7 @@ const RouteJoints = ({
       ref={circleRef}
       draggable={draggable}
       onDragMove={handleDragMove}
-      //   onMouseEnter={scaleUp}
+      onMouseDown={handleMouseDown}
       //   onMouseLeave={scaleDown}
     />
   );

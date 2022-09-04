@@ -65,9 +65,10 @@ function RouteCanvas({ imageUrl }: RouteCanvasProps) {
   }, []);
 
   const handleClick = (e: any) => {
-    const pos = e.target.getStage().getPointerPosition();
+    const clickPos = e.target.getStage().getPointerPosition();
+    setWithinCanvasEl(true);
     //convert to array
-    let convertedCoords = Object.values(pos) as number[];
+    let convertedCoords = Object.values(clickPos) as number[];
     //check if not on the any other point
     const insideElement: boolean = isWithinAnyElement(
       jointCoords,
@@ -97,6 +98,17 @@ function RouteCanvas({ imageUrl }: RouteCanvasProps) {
     }
   };
 
+  const handleMouseDown = (e: any) => {
+    // check if click is within canvas
+    const jointPos = e.target.getStage().getPointerPosition();
+
+    const { width, height } = canvasSize;
+    const { x, y } = jointPos;
+    console.log("jointPos: ", x, y);
+    const isWithinCanvasEl = isWithinCanvas(x, y, jointRadius, width, height);
+    if (isWithinCanvasEl) setWithinCanvasEl(isWithinCanvasEl);
+  };
+
   return (
     <div className={style.wrapper} ref={parentContainerRef}>
       <Stage
@@ -124,6 +136,7 @@ function RouteCanvas({ imageUrl }: RouteCanvasProps) {
                 canvasHeight={canvasSize.height}
                 jointCoords={joint}
                 handleDragMove={handleDragMove}
+                handleMouseDown={handleMouseDown}
                 draggable={withinCanvasEl}
               />
             ))}
