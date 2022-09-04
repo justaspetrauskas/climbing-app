@@ -7,17 +7,26 @@ import { useSession } from "next-auth/react";
 import ImageLayer from "./ImageLayer";
 import RouteLine from "./RouteLine";
 import RouteJoints from "./RouteJoints";
-import { drawLine } from "./tools";
+import { isWithinAnyElement, isWithinCanvas } from "./tools";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setJointCoords,
+  updateJointCoords,
+} from "../../redux/slices/newRouteReducer";
+import { selectJointCoords } from "../../redux/store";
 
 interface RouteCanvasProps {
   imageUrl: string;
 }
 
+const radiusMultiplier: number = 6;
+
 function RouteCanvas({ imageUrl }: RouteCanvasProps) {
   const session = useSession();
-  const parentContainerRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<Konva.Line>(null);
+  const dispatch = useDispatch();
+  const jointCoords = useSelector(selectJointCoords);
 
+  const parentContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<Konva.Stage>(null);
 
   const [canvasSize, setCanvasSize] = useState({
@@ -25,7 +34,9 @@ function RouteCanvas({ imageUrl }: RouteCanvasProps) {
     height: 0,
   });
 
-  const [jointCoords, setJointCoords] = useState<number[][]>([]);
+  const [jointRadius, setJointRadius] = useState(8);
+
+  const [withinCanvasEl, setWithinCanvasEl] = useState(true);
 
   useEffect(() => {
     console.log(session);
@@ -34,10 +45,15 @@ function RouteCanvas({ imageUrl }: RouteCanvasProps) {
   useEffect(() => {
     const handleResize = () => {
       if (parentContainerRef.current) {
+        const ratio =
+          parentContainerRef.current.clientWidth /
+          parentContainerRef.current.clientHeight;
+
         setCanvasSize({
           width: parentContainerRef.current.clientWidth,
           height: parentContainerRef.current.clientHeight,
         });
+        setJointRadius(ratio * radiusMultiplier);
 
         // resize points
       }
@@ -53,27 +69,32 @@ function RouteCanvas({ imageUrl }: RouteCanvasProps) {
     //convert to array
     let convertedCoords = Object.values(pos) as number[];
     //check if not on the any other point
+    const insideElement: boolean = isWithinAnyElement(
+      jointCoords,
+      convertedCoords,
+      jointRadius
+    );
 
-    setJointCoords([...jointCoords, convertedCoords]);
+    if (!insideElement) dispatch(setJointCoords(convertedCoords));
+  };
 
-    //drawLine
-
-    // is on the other point
-
-    // setWithinCanvas(true);
-
-    // const withinElement =
-    //   routePath.joints.filter((joint) =>
-    //     isWithinElement(pos.x, pos.y, joint, circle.radius)
-    //   ).length > 0;
-    // if (!withinElement) {
-    //   handleCanvasChange([
-    //     ...routePath.joints,
-    //     [pos.x / canvasSize.width, pos.y / canvasSize.height],
-    //   ]);
-    // } else {
-    //   setWithinCanvas(true);
-    // }
+  const handleDragMove = (e: any) => {
+    console.log(e, typeof e);
+    const jointIndex = e.target.index;
+    let jointPos = e.target.getStage().getPointerPosition();
+    const { width, height } = canvasSize;
+    const { x, y } = jointPos;
+    // check if jointPos is within canvas
+    const isWithinCanvasEl = isWithinCanvas(x, y, jointRadius, width, height);
+    if (isWithinCanvasEl) {
+      const jointsCopy = [...jointCoords];
+      jointsCopy[jointIndex - 1] = [x, y];
+      dispatch(updateJointCoords(jointsCopy));
+      setWithinCanvasEl(true);
+    } else {
+      // stop dragging
+      setWithinCanvasEl(false);
+    }
   };
 
   return (
@@ -98,10 +119,12 @@ function RouteCanvas({ imageUrl }: RouteCanvasProps) {
             jointCoords.map((joint, i) => (
               <RouteJoints
                 key={i}
-                circleRadius={8}
+                circleRadius={jointRadius}
                 canvasWidth={canvasSize.width}
                 canvasHeight={canvasSize.height}
                 jointCoords={joint}
+                handleDragMove={handleDragMove}
+                draggable={withinCanvasEl}
               />
             ))}
         </Layer>

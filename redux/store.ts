@@ -15,5 +15,7 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export const selectNewRouteState = (state: RootState) => state.newRoute;
+export const selectJointCoords = (state: RootState) =>
+  state.newRoute.jointCoords;
 export const selectMapLocationState = (state: RootState) => state.mapLocation;
 export const selectImageUploadState = (state: RootState) => state.imageUpload;
