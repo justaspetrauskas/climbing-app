@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import RouteLocation from "../RouteLocation/RouteLocation";
 import style from "./routeDetailForm.module.css";
 import RouteGradeSlider from "./RouteGradeSlider";
 
@@ -41,6 +42,7 @@ const RouteDetailsForm = () => {
           validationRules={{ required: true }}
           registerField={register}
         />
+        <RouteLocation />
       </form>
     </div>
   );

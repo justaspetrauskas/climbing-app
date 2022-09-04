@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import MapComponent from "../MapComponent/MapComponent";
-import IconButton from "../IconButton/IconButton";
+import MapComponent from "../../MapComponent/MapComponent";
+import IconButton from "../../IconButton/IconButton";
 
-import style from "../../styles/routeComponent.module.css";
+import style from "../../../styles/routeComponent.module.css";
 import { FaLocationArrow } from "react-icons/fa";
-import { setRouteLocation } from "../../redux/slices/newRouteReducer";
-import { selectNewRouteState } from "../../redux/store";
+import { setRouteLocation } from "../../../redux/slices/newRouteReducer";
+import { selectNewRouteState } from "../../../redux/store";
 import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
-import { setCurrentLocation } from "../../redux/slices/mapLocationReducer";
+import { setCurrentLocation } from "../../../redux/slices/mapLocationReducer";
 
 const validLatitude = new RegExp("^[-+]?([1-8]?[1-9]|[1-9]0)\\.{1}\\d{1,18}$");
 const validLongitude = new RegExp(

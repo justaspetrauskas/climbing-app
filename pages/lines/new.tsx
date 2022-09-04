@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import BodyLayout from "../../components/BodyLayout/BodyLayout";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
 import PageLayout from "../../components/PageLayout/PageLayout";
-import RouteLocation from "../../components/RouteLocation/RouteLocation";
+import RouteLocation from "../../components/RouteComposer/RouteLocation/RouteLocation";
 import { selectNewRouteState } from "../../redux/store";
 import { getSession, useSession } from "next-auth/react";
 import SectionLayout from "../../components/SectionLayout/SectionLayout";

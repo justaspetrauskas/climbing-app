@@ -33,7 +33,7 @@ input[type="range"].rangeInput:focus-visible {
 
 input[type="range"].rangeInput::-webkit-slider-thumb {
   @apply appearance-none h-4 w-4 rounded-full bg-urban_blue
-  shadow-sm border border-urban_white
+  shadow-sm border border-urban_white z-40
   outline outline-offset-1 outline-1 ring-1;
 }
 
@@ -42,5 +42,27 @@ input[type="range"].rangeInput:focus {
 }
 
 .currentGrade {
-  @apply border border-urban_blue;
+  @apply border-l ml-5 pl-1 border-urban_blue;
+}
+
+.grades-container {
+  @apply mt-2 text-urban_blue
+  -mx-[0.3rem]
+  w-[calc(100%+0.6rem)] items-center justify-start;
+}
+.grades-container span {
+  @apply relative inline-block w-[calc(100%/27)] 
+  
+  text-xs text-center
+  transition duration-300 scale-100;
+}
+.grades-container span.active-grade {
+  @apply scale-150 border-b border-urban_blue
+  bg-urban_white
+  transition px-1 duration-300;
+}
+
+span.active-grade::after {
+  @apply content-[''] absolute border-l border-urban_blue
+  -top-[0.5rem] left-1/2 h-[0.4rem] z-10 translate-y-1;
 }
