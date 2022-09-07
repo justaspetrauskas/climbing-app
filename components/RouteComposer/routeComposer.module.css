@@ -14,12 +14,13 @@
  gap-8 h-full w-full overflow-hidden p-5 md:p-7;
 }
 
-.progress-bar {
-  @apply absolute top-1/2 left-1/2 bg-[#E8DFD8]
+/* .progress-bar {
+  @apply absolute left-1/2 bg-[#E8DFD8]
   h-[3px] w-full md:h-full md:w-[3px] rounded-lg
-  -translate-x-1/2 -translate-y-1/2
+
 overflow-hidden;
-}
+} */
+
 .progress-bar--fill-vertical {
   @apply md:block bg-urban_blue h-full w-full;
 }

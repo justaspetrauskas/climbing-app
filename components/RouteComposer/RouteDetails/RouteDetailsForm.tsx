@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import RouteLocation from "../RouteLocation/RouteLocation";
+import InputField from "../../InputFieldContainer/InputFieldContainer";
+import RouteFeatures from "../RouteFeatures/RouteFeatures";
+import RouteLocation from "../RouteLocation/RouteLocationEl";
 import style from "./routeDetailForm.module.css";
 import RouteGradeSlider from "./RouteGradeSlider";
 
@@ -13,10 +15,7 @@ const RouteDetailsForm = () => {
   return (
     <div className={style.wrapper}>
       <form className={style["form-container"]} action="">
-        <div className={style["form-field"]}>
-          <label className={style.formInputLabel} htmlFor={`input-routeName`}>
-            Route name
-          </label>
+        <InputField label="Route name">
           <input
             className={style.formInput}
             placeholder={"Try to come up with descriptive name"}
@@ -24,11 +23,9 @@ const RouteDetailsForm = () => {
             type={"text"}
             {...register("routeName", { required: true })}
           />
-        </div>
-        <div className={style["form-field"]}>
-          <label className={style.formInputLabel} htmlFor={`input-routeName`}>
-            Route Description
-          </label>
+        </InputField>
+
+        <InputField label="Route description">
           <textarea
             className={style.formInput}
             placeholder={"Try to come up with descriptive name"}
@@ -36,12 +33,13 @@ const RouteDetailsForm = () => {
             rows={5}
             // {...registerField(formfield, validationRules)}
           />
-        </div>
+        </InputField>
         <RouteGradeSlider
           formfield={"grade"}
           validationRules={{ required: true }}
           registerField={register}
         />
+        <RouteFeatures />
         <RouteLocation />
       </form>
     </div>

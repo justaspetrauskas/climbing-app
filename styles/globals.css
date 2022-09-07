@@ -9,6 +9,10 @@
 @layer base {
   :root {
   }
+  *:focus {
+    /* change to another color */
+    outline: none;
+  }
   body {
     @apply text-urban_black bg-[#f5f7fa] font-poppins;
   }

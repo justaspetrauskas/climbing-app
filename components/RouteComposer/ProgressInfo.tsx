@@ -4,6 +4,13 @@ import ProgressStep from "./ProgressStep";
 
 import style from "./routeComposer.module.css";
 
+const formSteps = [
+  { title: "Route Description", active: false, completed: false, step: 1 },
+  { title: "Upload a picture", active: false, completed: false, step: 2 },
+  { title: "Draw a problem", active: false, completed: false, step: 3 },
+  { title: "One Last Peek", active: false, completed: false, step: 4 },
+];
+
 const ProgressInfo = () => {
   return (
     <div className={[style["progress-wrapper"], style.col].join(" ")}>
@@ -14,22 +21,14 @@ const ProgressInfo = () => {
             style={{}}
           ></div> */}
         </div>
-
-        <ProgressStep
-          completed={true}
-          stepTitle={"Route Description"}
-          active={false}
-        />
-        <ProgressStep
-          completed={false}
-          stepTitle={"Route Canvas"}
-          active={true}
-        />
-        <ProgressStep
-          completed={false}
-          stepTitle={"One Last Peek"}
-          active={false}
-        />
+        {formSteps.map((step) => (
+          <ProgressStep
+            key={step.step}
+            completed={step.completed}
+            stepTitle={step.title}
+            active={step.active}
+          />
+        ))}
       </div>
     </div>
   );

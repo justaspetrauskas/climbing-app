@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 import { FcGoogle } from "react-icons/fc";
-import style from "../../styles/iconButton.module.css";
+import style from "./iconButton.module.css";
 import {
   getProviders,
   signIn,
@@ -16,7 +16,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 interface IconButtonProps {
   type: "google" | "custom";
   children?: React.ReactNode;
-  clickHandler?: () => void;
+  clickHandler?: (e?: any) => void;
 }
 
 const IconButton = ({

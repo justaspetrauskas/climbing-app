@@ -1,0 +1,6 @@
+.wrapper {
+  @apply relative flex-col items-center h-full w-full;
+}
+.map-container {
+  @apply w-full h-full;
+}

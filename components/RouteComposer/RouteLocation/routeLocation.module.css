@@ -1,0 +1,20 @@
+.input-wrapper {
+  @apply flex flex-col gap-y-1 w-full items-center justify-between;
+}
+
+.coordinates-input-wrapper {
+  @apply flex flex-row items-start my-2 flex-1;
+}
+
+.coordinates-input {
+  @apply flex flex-row gap-x-1 bg-white
+  rounded-md px-2 py-0.5 
+  text-urban_blue;
+}
+.coordinates-input input {
+  @apply tracking-wider;
+}
+
+.map-controls {
+  @apply py-2 px-6 flex flex-row items-center justify-start;
+}

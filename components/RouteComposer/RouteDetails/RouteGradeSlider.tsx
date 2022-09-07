@@ -3,6 +3,7 @@ import { UseFormRegister } from "react-hook-form";
 import { routeGrades } from "./routeLevels";
 
 import style from "./routeDetailForm.module.css";
+import InputFieldContainer from "../../InputFieldContainer/InputFieldContainer";
 
 interface RouteGradeSliderProps {
   registerField: UseFormRegister<any>;
@@ -33,11 +34,7 @@ const RouteGradeSlider = ({
   };
 
   return (
-    <div className={style["form-field"]}>
-      <label className={style.formInputLabel} htmlFor={`input-difficulty`}>
-        Route difficulty
-      </label>
-
+    <InputFieldContainer label={"Route difficulty"}>
       <span id="rs-bullet" className={style.currentGrade}>
         current grade: {gradeLabel}
       </span>
@@ -64,7 +61,7 @@ const RouteGradeSlider = ({
           </span>
         ))}
       </div>
-    </div>
+    </InputFieldContainer>
   );
 };
 

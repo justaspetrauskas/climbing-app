@@ -1,0 +1,11 @@
+.form-field {
+  @apply relative w-full;
+}
+
+.form-field:not(:last-child) {
+  @apply pb-3;
+}
+
+.form-Input-label {
+  @apply ml-2 font-semibold mb-1 inline-block;
+}

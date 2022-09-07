@@ -8,18 +8,8 @@ gap-8 overflow-hidden p-5 md:p-7;
   @apply h-full flex md:flex-col items-start justify-around;
 }
 
-.form-field {
-  @apply relative w-full;
-}
-
-.form-field:not(:last-child) {
-  @apply pb-3;
-}
-.formInputLabel {
-  @apply ml-2 font-semibold;
-}
 .formInput {
-  @apply px-2 py-1 rounded-lg w-full appearance-none;
+  @apply px-2 py-1 rounded-lg w-full appearance-none inline-block;
 }
 
 /* range input */
@@ -52,17 +42,20 @@ input[type="range"].rangeInput:focus {
 }
 .grades-container span {
   @apply relative inline-block w-[calc(100%/27)] 
-  
   text-xs text-center
   transition duration-300 scale-100;
 }
 .grades-container span.active-grade {
-  @apply scale-150 border-b border-urban_blue
-  bg-urban_white
+  @apply scale-150 
+ z-20
   transition px-1 duration-300;
 }
 
 span.active-grade::after {
   @apply content-[''] absolute border-l border-urban_blue
-  -top-[0.5rem] left-1/2 h-[0.4rem] z-10 translate-y-1;
+  -top-[0.35rem] left-1/2 h-[0.4rem] z-10 animate-[gradeTick_0.3s_ease-in];
+}
+
+.grades-container span:not(.active-grade) {
+  @apply blur-[0.8px];
 }

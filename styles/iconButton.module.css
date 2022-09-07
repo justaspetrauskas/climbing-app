@@ -1,6 +1,0 @@
-.IconButton {
-  @apply border p-2 rounded-lg bg-gray-50 text-urban_blue;
-}
-.IconButton:hover {
-  @apply ring-urban_blue/70 ring-2 bg-white font-semibold;
-}

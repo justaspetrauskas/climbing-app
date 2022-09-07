@@ -23,6 +23,12 @@ module.exports = {
       gridTemplateColumns: {
         navigation: `auto 1fr 3rem auto`,
       },
+      keyframes: {
+        gradeTick: {
+          "0%": { transform: "translateY(-0.7rem)" },
+          "100%": { transform: "translateY(-0.25rem)" },
+        },
+      },
     },
   },
   plugins: [],

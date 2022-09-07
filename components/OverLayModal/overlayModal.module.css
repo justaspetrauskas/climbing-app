@@ -1,0 +1,22 @@
+.overalay-container {
+  @apply fixed w-screen h-screen top-0 left-0 bg-urban_black/80 z-[9999]
+    flex flex-col items-center justify-center backdrop-blur-sm;
+}
+
+.wrapper {
+  @apply h-[calc(100vh*0.8)] 
+    rounded-lg
+    overflow-hidden bg-urban_white
+    max-w-[calc(100vw*0.9)] w-full lg:w-1/2
+    relative flex flex-col;
+}
+
+.modal-header {
+  @apply py-2 px-8 flex flex-row items-center justify-between
+  flex-[0_1_auto] font-bold border-b;
+  /* flex: 0 1 auto; */
+}
+
+.modal-body {
+  @apply h-auto flex-[1_1_auto];
+}

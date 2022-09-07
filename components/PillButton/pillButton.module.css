@@ -1,0 +1,14 @@
+.pill-btn {
+  @apply py-0.5 px-3 text-sm rounded-full 
+  duration-300
+  text-urban_blue border border-urban_blue;
+}
+
+.pill-btn:hover,
+.pill-btn--active {
+  @apply border-transparent text-urban_white bg-urban_blue;
+}
+
+.pill-btn--active:hover {
+  @apply text-urban_blue border border-urban_blue bg-urban_blue/30;
+}

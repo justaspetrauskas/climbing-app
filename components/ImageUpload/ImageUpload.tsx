@@ -5,7 +5,7 @@ import { selectImageUploadState } from "../../redux/store";
 import style from "../../styles/imageUpload.module.css";
 import DropZone from "../DropZone/DropZone";
 import ImageCropModal from "../ImageCropModal/ImageCropModal";
-import RouteLocation from "../RouteComposer/RouteLocation/RouteLocation";
+import RouteLocation from "../RouteComposer/RouteLocation/RouteLocationEl";
 
 const ImageUpload = () => {
   const {
