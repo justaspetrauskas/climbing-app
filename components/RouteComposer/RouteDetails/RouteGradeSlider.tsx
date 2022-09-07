@@ -3,7 +3,7 @@ import { UseFormRegister } from "react-hook-form";
 import { routeGrades } from "./routeLevels";
 
 import style from "./routeDetailForm.module.css";
-import InputFieldContainer from "../../InputFieldContainer/InputFieldContainer";
+import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
 
 interface RouteGradeSliderProps {
   registerField: UseFormRegister<any>;

@@ -1,6 +1,6 @@
 import React from "react";
 import { MdDone } from "react-icons/md";
-import style from "./routeComposer.module.css";
+import style from "./progress.module.css";
 
 interface ProgressStepProps {
   completed: boolean;
@@ -26,9 +26,9 @@ const ProgressStep = ({
       }`}
       onClick={stepClickHandler}
     >
-      <i>
-        <MdDone size={18} />
-      </i>
+      {/* <i>
+        <MdDone size={16} />
+      </i> */}
       <h4>{stepTitle}</h4>
     </button>
   );

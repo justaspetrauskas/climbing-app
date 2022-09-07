@@ -1,0 +1,48 @@
+.progress-wrapper {
+  @apply lg:w-1/4 w-full relative;
+}
+
+.progress-container {
+  @apply relative flex lg:flex-col bg-primary_green 
+      text-urban_black items-center justify-around rounded-xl shadow-light shadow-primary_green
+ lg:h-full overflow-hidden p-5 lg:p-7;
+}
+
+/* .progress-bar {
+    @apply absolute left-1/2 bg-[#E8DFD8]
+    h-[3px] w-full md:h-full md:w-[3px] rounded-lg
+  
+  overflow-hidden;
+  } */
+
+.progress-step {
+  @apply relative min-w-[8rem] flex py-2 px-4 rounded-md
+    transition font-semibold text-primary_white
+    flex-nowrap items-center gap-y-2 flex-col;
+}
+
+.progress-step:not(.progress-step--active) {
+  @apply text-primary_white/40;
+}
+
+.progress-step--active {
+  @apply scale-110 transition;
+}
+.progress-step--completed {
+}
+
+.progress-step:hover {
+  @apply scale-125 transition duration-300;
+}
+.progress-step:hover > i {
+  @apply border border-urban_white;
+}
+/* .progress-step > i {
+    @apply bg-lime-600 border;
+  } */
+.progress-step--completed svg {
+  @apply fill-white transition;
+}
+.progress-step > i {
+  @apply border rounded-full p-[0.15rem] border-urban_white transition;
+}

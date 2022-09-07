@@ -1,6 +1,6 @@
 import React from "react";
 import ComposerControls from "./ComposerControls/ComposerControls";
-import ProgressInfo from "./ProgressInfo";
+import ProgressInfo from "./ComposerProgress/ProgressInfo";
 
 import style from "./routeComposer.module.css";
 import RouteSteps from "./RouteSteps";

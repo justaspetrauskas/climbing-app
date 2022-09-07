@@ -1,0 +1,35 @@
+.btn-main {
+  @apply px-7 py-[0.5rem] text-center 
+  rounded-br-xl rounded-tl-xl text-base font-[600]
+  cursor-pointer transition duration-300 shadow-md;
+}
+.btn-main:hover {
+  @apply shadow-light 
+  transition duration-300 shadow-primary_darkGrey;
+}
+.btn-main:disabled {
+  @apply bg-primary_darkGrey/20;
+}
+.btn-main:disabled:hover {
+  @apply shadow-none bg-primary_darkGrey/20 text-primary_white;
+}
+
+.btn-primary {
+  @apply bg-primary_green text-primary_white;
+}
+.btn-primary:hover {
+  @apply shadow-primary_green bg-primary_white text-primary_green;
+}
+
+.btn-secondary {
+  @apply border border-primary_green text-primary_green bg-inherit;
+}
+.btn-secondary:hover {
+  @apply shadow-primary_green border-primary_white bg-primary_white;
+}
+.btn-tertiary {
+  @apply bg-primary_yellow text-primary_green;
+}
+.btn-tertiary:hover {
+  @apply shadow-primary_yellow bg-primary_darkGrey text-primary_yellow;
+}

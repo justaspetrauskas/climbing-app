@@ -6,12 +6,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        light: "0 0 30px -12px rgba(0, 0, 0, 0.3)",
+      },
       colors: {
         urban_white: "#F3F3F3",
         urban_black: "#121b22",
         urban_blue: "#1A3949",
         urban_lightBlue: "#72A1CD",
         urban_red: "#9D352A",
+        primary_green: "#274546",
+        secondary_white: "#EFEEE5",
+        primary_white: "#FBF8F3",
+        primary_darkGrey: "#232323",
+        primary_yellow: "#ffd447",
       },
       fontFamily: {
         poppins: ['"Poppins"', "sans-serif"],

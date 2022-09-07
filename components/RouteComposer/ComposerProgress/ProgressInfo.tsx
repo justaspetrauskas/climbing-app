@@ -1,11 +1,11 @@
 import React from "react";
 import { MdDone } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { goToStep } from "../../redux/slices/routeComposerReducer";
-import { selectRouteComposerState } from "../../redux/store";
+import { goToStep } from "../../../redux/slices/routeComposerReducer";
+import { selectRouteComposerState } from "../../../redux/store";
 import ProgressStep from "./ProgressStep";
 
-import style from "./routeComposer.module.css";
+import style from "./progress.module.css";
 
 const ProgressInfo = () => {
   const { steps, currentStepIndex } = useSelector(selectRouteComposerState);

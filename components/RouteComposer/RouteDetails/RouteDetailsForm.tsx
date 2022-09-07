@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import InputField from "../../InputFieldContainer/InputFieldContainer";
+import InputField from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import RouteFeatures from "../RouteFeatures/RouteFeatures";
 import RouteLocation from "../RouteLocation/RouteLocationEl";
 import style from "./routeDetailForm.module.css";
@@ -40,7 +40,7 @@ const RouteDetailsForm = () => {
           registerField={register}
         />
         <RouteFeatures />
-        <RouteLocation />
+        {/* <RouteLocation /> */}
       </form>
     </div>
   );

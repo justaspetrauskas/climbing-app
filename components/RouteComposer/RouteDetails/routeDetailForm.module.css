@@ -1,7 +1,9 @@
 .wrapper {
-  @apply w-full md:w-2/3 relative bg-urban_white
+  @apply w-full lg:w-3/4 relative 
+  /* lg:-translate-x-4 lg:translate-y-2 lg:-z-10 */
+  rounded-lg
   text-urban_black 
-gap-8 overflow-hidden p-5 md:p-7;
+ p-5 lg:p-8;
 }
 
 .form-container {

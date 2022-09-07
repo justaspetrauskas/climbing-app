@@ -6,6 +6,7 @@ import {
 } from "../../../redux/slices/routeComposerReducer";
 import { selectRouteComposerState } from "../../../redux/store";
 import IconButton from "../../IconButton/IconButton";
+import Button from "../../UILayout/Button/Button";
 
 import style from "./controls.module.css";
 
@@ -34,12 +35,12 @@ const ComposerControls = () => {
   return (
     <div className={style["controls-wrapper"]}>
       <div className={style["controls-container"]}>
-        <IconButton type="custom" clickHandler={(e) => clickBackHandler(e)}>
+        <Button type="Secondary" clickHandler={(e) => clickBackHandler(e)}>
           Back
-        </IconButton>
-        <IconButton type="custom" clickHandler={(e) => clickNextHandler(e)}>
+        </Button>
+        <Button disabled={false} clickHandler={(e) => clickNextHandler(e)}>
           Next
-        </IconButton>
+        </Button>
       </div>
     </div>
   );

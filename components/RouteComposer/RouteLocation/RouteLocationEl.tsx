@@ -4,7 +4,7 @@ import { FaLocationArrow } from "react-icons/fa";
 
 import MapComponent from "../../MapComponent/MapComponent";
 import IconButton from "../../IconButton/IconButton";
-import InputFieldContainer from "../../InputFieldContainer/InputFieldContainer";
+import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import OverlayModal from "../../OverLayModal/OverlayModal";
 
 import { setRouteLocation } from "../../../redux/slices/newRouteReducer";

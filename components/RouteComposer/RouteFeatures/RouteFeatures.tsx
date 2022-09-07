@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InputFieldContainer from "../../InputFieldContainer/InputFieldContainer";
+import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import style from "./routeFeatures.module.css";
 import SingleFeature from "./SingleFeature";
 
