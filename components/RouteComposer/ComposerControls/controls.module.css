@@ -1,0 +1,6 @@
+.controls-wrapper {
+  @apply flex flex-row items-center justify-end w-full mt-4;
+}
+.controls-container {
+  @apply flex gap-x-2 shrink-0;
+}

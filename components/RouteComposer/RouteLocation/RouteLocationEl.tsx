@@ -1,22 +1,23 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { FaLocationArrow } from "react-icons/fa";
+
 import MapComponent from "../../MapComponent/MapComponent";
 import IconButton from "../../IconButton/IconButton";
+import InputFieldContainer from "../../InputFieldContainer/InputFieldContainer";
+import OverlayModal from "../../OverLayModal/OverlayModal";
 
-import style from "./routeLocation.module.css";
-import { FaLocationArrow } from "react-icons/fa";
 import { setRouteLocation } from "../../../redux/slices/newRouteReducer";
 import {
   selectMapLocationState,
   selectNewRouteState,
 } from "../../../redux/store";
-import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 import {
   setCurrentLocation,
   setUserLocation,
 } from "../../../redux/slices/mapLocationReducer";
-import InputFieldContainer from "../../InputFieldContainer/InputFieldContainer";
-import OverlayModal from "../../OverLayModal/OverlayModal";
+
+import style from "./routeLocation.module.css";
 
 const validLatitude = new RegExp("^[-+]?([1-8]?[1-9]|[1-9]0)\\.{1}\\d{1,18}$");
 const validLongitude = new RegExp(
@@ -114,19 +115,13 @@ const RouteLocationEl = () => {
     e.preventDefault();
     getUsersLocation();
   };
-  //   useEffect(() => {
-  //     if (autocomplete) {
-  //       const place = autocomplete.getPlace();
-  //       console.log(place);
-  //       if (place) {
-  //         const { location } = place!.geometry!;
-  //         console.log(location!.lng(), location!.lat());
-  //         dispatch(
-  //           setCurrentLocation({ lat: location!.lat(), lng: location!.lng() })
-  //         );
-  //       }
-  //     }
-  //   }, [autocomplete]);
+
+  const closeModal = (e: MouseEvent) => {
+    e.preventDefault();
+
+    setModalIsOpen(false);
+  };
+
   if (modalIsOpen) {
     return (
       <OverlayModal
@@ -135,14 +130,23 @@ const RouteLocationEl = () => {
       >
         <MapComponent />
         <div className={style["map-controls"]}>
-          {routeLocation && <div>{latitude}</div>}
+          <div className={style["current-coordinates-wrapper"]}>
+            <h4>Selected Coordinates:</h4>
+            <span>Lat: {latitude}</span>
+            <span>Lng: {longitude}</span>
+          </div>
 
-          <IconButton type="custom" clickHandler={(e: any) => locateMe(e)}>
-            <i>
-              <FaLocationArrow size={14} />
-            </i>
-            <span>LocateMe</span>
-          </IconButton>
+          <div className={style["footer-controls"]}>
+            <IconButton type="custom" clickHandler={(e: any) => locateMe(e)}>
+              <i>
+                <FaLocationArrow size={14} />
+              </i>
+              <span>Locate Me</span>
+            </IconButton>
+            <IconButton type="custom" clickHandler={(e: any) => closeModal(e)}>
+              <span>Ok</span>
+            </IconButton>
+          </div>
         </div>
       </OverlayModal>
     );

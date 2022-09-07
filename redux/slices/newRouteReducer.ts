@@ -2,6 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Location } from "../../lib/types";
 
 interface newRouteState {
+  title: string;
+  description?: string;
+  difficulty: number | null;
+  features: string[];
+  author: string; // userId
   imageUrl: string;
   routeLocation: Location | null;
   jointCoords: number[][];
@@ -10,6 +15,11 @@ interface newRouteState {
 
 const initialState: newRouteState = {
   //W initialGenres: genres,
+  title: "",
+  description: "",
+  difficulty: null,
+  features: [],
+  author: "",
   imageUrl: "",
   routeLocation: null,
   jointCoords: [[]],

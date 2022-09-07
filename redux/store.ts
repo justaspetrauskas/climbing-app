@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import NewRouteReducer from "./slices/newRouteReducer";
 import MapLocationReducer from "./slices/mapLocationReducer";
 import ImageUploadReducer from "./slices/imageUploadReducer";
+import RouteComposerReducer from "./slices/routeComposerReducer";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     newRoute: NewRouteReducer,
     mapLocation: MapLocationReducer,
     imageUpload: ImageUploadReducer,
+    routeComposer: RouteComposerReducer,
   },
 });
 
@@ -19,3 +21,5 @@ export const selectJointCoords = (state: RootState) =>
   state.newRoute.jointCoords;
 export const selectMapLocationState = (state: RootState) => state.mapLocation;
 export const selectImageUploadState = (state: RootState) => state.imageUpload;
+export const selectRouteComposerState = (state: RootState) =>
+  state.routeComposer;

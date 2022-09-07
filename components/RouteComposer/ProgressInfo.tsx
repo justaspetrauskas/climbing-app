@@ -1,17 +1,20 @@
 import React from "react";
 import { MdDone } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { goToStep } from "../../redux/slices/routeComposerReducer";
+import { selectRouteComposerState } from "../../redux/store";
 import ProgressStep from "./ProgressStep";
 
 import style from "./routeComposer.module.css";
 
-const formSteps = [
-  { title: "Route Description", active: false, completed: false, step: 1 },
-  { title: "Upload a picture", active: false, completed: false, step: 2 },
-  { title: "Draw a problem", active: false, completed: false, step: 3 },
-  { title: "One Last Peek", active: false, completed: false, step: 4 },
-];
-
 const ProgressInfo = () => {
+  const { steps, currentStepIndex } = useSelector(selectRouteComposerState);
+  const dispatch = useDispatch();
+
+  const stepClickHandler = (stepIndex: number) => {
+    // should be able to go only to validated step
+    dispatch(goToStep(stepIndex));
+  };
   return (
     <div className={[style["progress-wrapper"], style.col].join(" ")}>
       <div className={style["progress-container"]}>
@@ -21,12 +24,13 @@ const ProgressInfo = () => {
             style={{}}
           ></div> */}
         </div>
-        {formSteps.map((step) => (
+        {steps.map((step, index) => (
           <ProgressStep
-            key={step.step}
-            completed={step.completed}
-            stepTitle={step.title}
-            active={step.active}
+            key={step.stepIndex}
+            completed={step.validated}
+            stepTitle={step.label}
+            active={index === currentStepIndex}
+            stepClickHandler={() => stepClickHandler(index)}
           />
         ))}
       </div>

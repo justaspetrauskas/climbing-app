@@ -1,14 +1,17 @@
 import React from "react";
+import ComposerControls from "./ComposerControls/ComposerControls";
 import ProgressInfo from "./ProgressInfo";
 
 import style from "./routeComposer.module.css";
-import RouteDetailsForm from "./RouteDetails/RouteDetailsForm";
+import RouteSteps from "./RouteSteps";
 
 const RouteComposer = () => {
   return (
     <div className={style.wrapper}>
       <ProgressInfo />
-      <RouteDetailsForm />
+      {/* steps */}
+      <RouteSteps />
+      <ComposerControls />
     </div>
   );
 };

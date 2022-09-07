@@ -1,5 +1,6 @@
 .input-wrapper {
-  @apply flex flex-col gap-y-1 w-full items-center justify-between;
+  @apply flex flex-col xl:flex-row
+  gap-y-1 w-full items-center justify-between;
 }
 
 .coordinates-input-wrapper {
@@ -16,5 +17,13 @@
 }
 
 .map-controls {
-  @apply py-2 px-6 flex flex-row items-center justify-start;
+  @apply py-2 px-6 border-t flex flex-row items-center justify-start;
+}
+
+.current-coordinates-wrapper {
+  @apply flex flex-row flex-1 gap-x-2 text-base;
+}
+
+.footer-controls {
+  @apply flex flex-row gap-x-1;
 }

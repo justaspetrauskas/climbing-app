@@ -6,15 +6,17 @@ interface ProgressStepProps {
   completed: boolean;
   stepTitle: string;
   active: boolean;
+  stepClickHandler: () => void;
 }
 
 const ProgressStep = ({
   completed = false,
   stepTitle,
   active = false,
+  stepClickHandler,
 }: ProgressStepProps) => {
   return (
-    <div
+    <button
       className={`${style["progress-step"]} ${
         active
           ? style["progress-step--active"]
@@ -22,12 +24,13 @@ const ProgressStep = ({
           ? style["progress-step--completed"]
           : ""
       }`}
+      onClick={stepClickHandler}
     >
       <i>
         <MdDone size={18} />
       </i>
       <h4>{stepTitle}</h4>
-    </div>
+    </button>
   );
 };
 

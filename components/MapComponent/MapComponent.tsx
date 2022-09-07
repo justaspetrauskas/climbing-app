@@ -18,34 +18,10 @@ const MapComponent = () => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_KEY!,
   });
 
-  const [marker, setMarker] = useState<googleMapsMarker | null>(null);
-
-  // useEffect(() => {
-  //   console.log("loaded");
-  //   if (map) {
-  //     console.log(map);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (isLoaded && currentLocation) {
-  //     map!.panTo(currentLocation);
-  //   }
-  // }, [currentLocation]);
-
-  // useEffect(() => {
-  //   if (map) {
-  //     if (routeLocation) {
-  //       map.panTo(routeLocation);
-  //     }
-  //   }
-  // }, [routeLocation]);
-
   const mapClickHandler = (e: google.maps.MapMouseEvent) => {
     const coord = e.latLng;
     if (coord) {
       dispatch(setRouteLocation({ lng: coord.lng(), lat: coord.lat() }));
-      console.log(routeLocation);
     }
   };
 

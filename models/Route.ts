@@ -8,7 +8,8 @@ export interface IRoute extends Document {
     value: number;
     label: string;
   };
-  path: number[];
+  features: string[];
+  path: number[][];
   author: string;
   imgUrl: string;
 }
@@ -28,7 +29,8 @@ const routeSchema: Schema = new Schema({
     value: { type: Number, integer: true, min: 1, max: 30 },
     label: String,
   },
-  path: [Number],
+  features: [String],
+  path: [[Number]],
   author: String,
   imgUrl: String,
 });
