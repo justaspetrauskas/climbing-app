@@ -26,9 +26,11 @@ const ProgressStep = ({
       }`}
       onClick={stepClickHandler}
     >
-      {/* <i>
-        <MdDone size={16} />
-      </i> */}
+      {completed && (
+        <i>
+          <MdDone size={16} />
+        </i>
+      )}
       <h4>{stepTitle}</h4>
     </button>
   );

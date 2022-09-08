@@ -3,16 +3,16 @@ import { FileError, FileRejection, useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
 import { setImagePreview } from "../../redux/slices/imageUploadReducer";
 
-import style from "../../styles/dropzone.module.css";
+import style from "./dropzone.module.css";
 
 interface UploadableFile {
   file: File;
   errors: FileError[];
 }
 interface DropZoneProps {
-  openModal: () => void;
+  onLoadHandler?: () => void;
 }
-const DropZone = ({ openModal }: DropZoneProps) => {
+const DropZone = ({ onLoadHandler }: DropZoneProps) => {
   const dispatch = useDispatch();
   const [file, setFile] = useState<UploadableFile | null>(null);
   const onDrop = useCallback((accFiles: File[], rejFiles: FileRejection[]) => {
@@ -32,7 +32,7 @@ const DropZone = ({ openModal }: DropZoneProps) => {
       reader.onloadend = () => {
         // store image data
         dispatch(setImagePreview(reader.result as string));
-        openModal();
+        // openModal();
       };
       reader.readAsDataURL(file.file);
     } else {

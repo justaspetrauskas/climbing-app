@@ -18,12 +18,6 @@ const ProgressInfo = () => {
   return (
     <div className={[style["progress-wrapper"], style.col].join(" ")}>
       <div className={style["progress-container"]}>
-        <div className={style["progress-bar"]}>
-          {/* <div
-            className={style["progress-bar--fill-vertical"]}
-            style={{}}
-          ></div> */}
-        </div>
         {steps.map((step, index) => (
           <ProgressStep
             key={step.stepIndex}

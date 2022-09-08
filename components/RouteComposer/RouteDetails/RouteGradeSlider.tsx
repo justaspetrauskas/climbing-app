@@ -35,9 +35,9 @@ const RouteGradeSlider = ({
 
   return (
     <InputFieldContainer label={"Route difficulty"}>
-      <span id="rs-bullet" className={style.currentGrade}>
+      {/* <span id="rs-bullet" className={style.currentGrade}>
         current grade: {gradeLabel}
-      </span>
+      </span> */}
       <input
         className={`${style.formInput} ${style.rangeInput}`}
         id={`input-difficulty`}
@@ -49,6 +49,7 @@ const RouteGradeSlider = ({
         // value={currentGrade}
         onChange={changeGradeHandler}
       />
+
       <div className={style["grades-container"]}>
         {routeGrades!.map((grade, index) => (
           <span

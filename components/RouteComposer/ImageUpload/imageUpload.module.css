@@ -1,0 +1,17 @@
+.upload-container {
+  @apply w-full overflow-hidden rounded-lg;
+}
+.image-container {
+  @apply rounded-lg overflow-hidden;
+}
+.image-crop-wrapper {
+  @apply relative flex flex-col;
+}
+
+.image-crop-container {
+  @apply h-[calc(100vh*0.7)] relative rounded-lg overflow-hidden;
+}
+
+.crop-controls {
+  @apply mt-2 flex flex-row justify-end gap-x-4;
+}

@@ -33,3 +33,7 @@
 .btn-tertiary:hover {
   @apply shadow-primary_yellow bg-primary_darkGrey text-primary_yellow;
 }
+
+.btn-sm {
+  @apply text-xs px-4 py-2;
+}

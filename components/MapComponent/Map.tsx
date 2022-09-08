@@ -91,39 +91,35 @@ const Map = ({ mapClickHandler, children }: MapProps) => {
   //   }, [marker, options]);
 
   return (
-    <div className={style.wrapper}>
-      {/* map components */}
-      <GoogleMap
-        mapContainerClassName={style["map-container"]}
-        center={center}
-        zoom={14}
-        options={options}
-        onClick={onMapClick}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-      >
-        {/* Child components, such as markers, info windows, etc. */}
-        {/* user location marker */}
-        {center && (
-          <MarkerF
-            onLoad={onMarkerLoad}
-            onUnmount={onMarkerUnmount}
-            position={center}
-            animation={google.maps.Animation.BOUNCE}
-            icon={{
-              path: "M8 12l-4.7023 2.4721.898-5.236L.3916 5.5279l5.2574-.764L8 0l2.3511 4.764 5.2574.7639-3.8043 3.7082.898 5.236z",
-              fillColor: "yellow",
-              fillOpacity: 0.9,
-              scale: 2,
-              strokeColor: "gold",
-              strokeWeight: 2,
-            }}
-          />
-        )}
+    <GoogleMap
+      mapContainerClassName={style["map-container"]}
+      center={center}
+      zoom={14}
+      options={options}
+      onClick={onMapClick}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
+    >
+      {/* Child components, such as markers, info windows, etc. */}
+      {/* user location marker */}
+      {center && (
+        <MarkerF
+          onLoad={onMarkerLoad}
+          onUnmount={onMarkerUnmount}
+          position={center}
+          icon={{
+            path: "M8 12l-4.7023 2.4721.898-5.236L.3916 5.5279l5.2574-.764L8 0l2.3511 4.764 5.2574.7639-3.8043 3.7082.898 5.236z",
+            fillColor: "yellow",
+            fillOpacity: 0.9,
+            scale: 2,
+            strokeColor: "gold",
+            strokeWeight: 2,
+          }}
+        />
+      )}
 
-        {children}
-      </GoogleMap>
-    </div>
+      {children}
+    </GoogleMap>
   );
 };
 

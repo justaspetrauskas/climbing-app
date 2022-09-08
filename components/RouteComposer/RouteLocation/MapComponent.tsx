@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useJsApiLoader, MarkerF } from "@react-google-maps/api";
-import style from "./mapComponent.module.css";
+import style from "./routeLocation.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { selectMapLocationState, selectNewRouteState } from "../../redux/store";
-import { setRouteLocation } from "../../redux/slices/newRouteReducer";
-import { setCurrentLocation } from "../../redux/slices/mapLocationReducer";
-import Map from "./Map";
+import {
+  selectMapLocationState,
+  selectNewRouteState,
+} from "../../../redux/store";
+import { setRouteLocation } from "../../../redux/slices/newRouteReducer";
+import { setCurrentLocation } from "../../../redux/slices/mapLocationReducer";
+import Map from "../../MapComponent/Map";
 
 type googleMapsMarker = google.maps.Marker;
 
@@ -29,14 +32,16 @@ const MapComponent = () => {
     return <div>Loading...</div>;
   } else {
     return (
-      <Map mapClickHandler={mapClickHandler}>
-        {routeLocation && (
-          <MarkerF
-            position={routeLocation}
-            animation={google.maps.Animation.BOUNCE}
-          />
-        )}
-      </Map>
+      <div className={style["map-container"]}>
+        <Map mapClickHandler={mapClickHandler}>
+          {routeLocation && (
+            <MarkerF
+              position={routeLocation}
+              animation={google.maps.Animation.BOUNCE}
+            />
+          )}
+        </Map>
+      </div>
     );
   }
 };

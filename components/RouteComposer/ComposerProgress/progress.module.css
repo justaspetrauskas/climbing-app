@@ -5,7 +5,7 @@
 .progress-container {
   @apply relative flex lg:flex-col bg-primary_green 
       text-urban_black items-center justify-around rounded-xl shadow-light shadow-primary_green
- lg:h-full overflow-hidden p-5 lg:p-7;
+  overflow-hidden p-5 lg:px-7 lg:py-12 gap-y-8;
 }
 
 /* .progress-bar {
@@ -17,24 +17,25 @@
 
 .progress-step {
   @apply relative min-w-[8rem] flex py-2 px-4 rounded-md
-    transition font-semibold text-primary_white
-    flex-nowrap items-center gap-y-2 flex-col;
+     font-semibold text-primary_white
+    flex-nowrap items-center gap-x-2 flex-row;
 }
 
 .progress-step:not(.progress-step--active) {
-  @apply text-primary_white/40;
+  @apply text-primary_white/40 transition duration-300;
 }
 
 .progress-step--active {
   @apply scale-110 transition;
 }
-.progress-step--completed {
-}
+/* .progress-step--completed {
+  @apply;
+} */
 
-.progress-step:hover {
+.progress-step:not(.progress-step--active):hover {
   @apply scale-125 transition duration-300;
 }
-.progress-step:hover > i {
+.progress-step:not(.progress-step--active):hover > i {
   @apply border border-urban_white;
 }
 /* .progress-step > i {

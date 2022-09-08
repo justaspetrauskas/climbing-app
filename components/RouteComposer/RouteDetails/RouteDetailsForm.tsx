@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import InputField from "../../UILayout/InputFieldContainer/InputFieldContainer";
+import FormLayout from "../FormLayout";
 import RouteFeatures from "../RouteFeatures/RouteFeatures";
 import RouteLocation from "../RouteLocation/RouteLocationEl";
 import style from "./routeDetailForm.module.css";
@@ -11,9 +12,12 @@ const RouteDetailsForm = () => {
     mode: "onChange",
   });
   const [details, setDetails] = useState({ name: "", difficulty: "" });
+  useEffect(() => {
+    console.log(details);
+  }, [details]);
 
   return (
-    <div className={style.wrapper}>
+    <FormLayout>
       <form className={style["form-container"]} action="">
         <InputField label="Route name">
           <input
@@ -42,7 +46,7 @@ const RouteDetailsForm = () => {
         <RouteFeatures />
         {/* <RouteLocation /> */}
       </form>
-    </div>
+    </FormLayout>
   );
 };
 

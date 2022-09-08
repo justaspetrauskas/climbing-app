@@ -3,6 +3,7 @@ import style from "./button.module.css";
 
 interface ButtonProps {
   type?: "Primary" | "Secondary" | "Tertiary" | "Submit" | "IconOnly";
+  size?: "sm" | "md" | "lg";
   clickHandler: (e?: any) => void;
   children: React.ReactNode;
   title?: string;
@@ -15,10 +16,11 @@ const Button = ({
   clickHandler,
   title = "Button",
   disabled = false,
+  size = "md",
 }: ButtonProps) => {
   const buttonClickHandler = () => {
     if (!disabled) {
-      clickHandler;
+      clickHandler();
     }
   };
 
@@ -26,6 +28,12 @@ const Button = ({
     <button
       className={`${style["btn-main"]} ${
         style[`btn-${type.toLocaleLowerCase()}`]
+      } ${
+        size === "sm"
+          ? style["btn-sm"]
+          : size === "md"
+          ? style["btn-md"]
+          : style["btn-lg"]
       }`}
       onClick={buttonClickHandler}
       type="button"

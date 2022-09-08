@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectRouteComposerState } from "../../redux/store";
+import ImageUpload from "./ImageUpload/ImageUpload";
 import RouteDetailsForm from "./RouteDetails/RouteDetailsForm";
+import RouteLocation from "./RouteLocation/RouteLocation";
 
 const RouteSteps = () => {
   const { currentStepIndex } = useSelector(selectRouteComposerState);
@@ -12,10 +14,12 @@ const RouteSteps = () => {
     case 0:
       return <RouteDetailsForm />;
     case 1:
-      return <div>route picture</div>;
+      return <RouteLocation />;
     case 2:
-      return <div>route picture</div>;
+      return <ImageUpload />;
     case 3:
+      return <div>one last peek</div>;
+    case 4:
       return <div>one last peek</div>;
     default:
       return <RouteDetailsForm />;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { selectImageUploadState } from "../../redux/store";
-import style from "../../styles/imageUpload.module.css";
+
 import DropZone from "../DropZone/DropZone";
 import ImageCropModal from "../ImageCropModal/ImageCropModal";
 import RouteLocation from "../RouteComposer/RouteLocation/RouteLocationEl";
@@ -29,7 +29,7 @@ const ImageUpload = () => {
 
   return (
     <div className={style.wrapper}>
-      <DropZone openModal={openModal} />
+      {/* <DropZone openModal={openModal} /> */}
       {/* do it as overlay */}
       {modalIsOpen && <ImageCropModal closeModal={closeModal} />}
       {/* <form action=""></form>

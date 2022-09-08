@@ -4,3 +4,10 @@
 .col {
   @apply relative w-full px-4;
 }
+.form-wrapper {
+  @apply w-full lg:w-3/4 relative 
+  /* lg:-translate-x-4 lg:translate-y-2 lg:-z-10 */
+  rounded-lg
+  text-urban_black 
+ p-5 lg:p-8;
+}
