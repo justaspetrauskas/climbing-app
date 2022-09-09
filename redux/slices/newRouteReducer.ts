@@ -30,6 +30,7 @@ export const newRouteSlice = createSlice({
   initialState,
   reducers: {
     setImageUrl: (state, action: PayloadAction<string>) => {
+      console.log("new image", action.payload);
       state.imageUrl = action.payload;
     },
     setRouteLocation: (state, action: PayloadAction<Location>) => {

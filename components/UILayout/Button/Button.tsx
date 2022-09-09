@@ -4,10 +4,11 @@ import style from "./button.module.css";
 interface ButtonProps {
   type?: "Primary" | "Secondary" | "Tertiary" | "Submit" | "IconOnly";
   size?: "sm" | "md" | "lg";
-  clickHandler: (e?: any) => void;
+  clickHandler?: (e?: any) => void;
   children: React.ReactNode;
   title?: string;
   disabled?: boolean;
+  styled?: "styled" | "rounded";
 }
 
 const Button = ({
@@ -17,9 +18,11 @@ const Button = ({
   title = "Button",
   disabled = false,
   size = "md",
+  styled = "styled",
 }: ButtonProps) => {
   const buttonClickHandler = () => {
-    if (!disabled) {
+    console.log("i'm here", disabled);
+    if (clickHandler) {
       clickHandler();
     }
   };
@@ -34,7 +37,7 @@ const Button = ({
           : size === "md"
           ? style["btn-md"]
           : style["btn-lg"]
-      }`}
+      } ${styled === "styled" ? style["btn-styled"] : style["btn-rounded"]} `}
       onClick={buttonClickHandler}
       type="button"
       title={disabled ? "Button is disabled" : title}

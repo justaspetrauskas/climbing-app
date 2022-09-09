@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import InputField from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import FormLayout from "../FormLayout";
 import RouteFeatures from "../RouteFeatures/RouteFeatures";
-import RouteLocation from "../RouteLocation/RouteLocationEl";
+
 import style from "./routeDetailForm.module.css";
 import RouteGradeSlider from "./RouteGradeSlider";
 

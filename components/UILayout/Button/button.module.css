@@ -1,6 +1,6 @@
 .btn-main {
-  @apply px-7 py-[0.5rem] text-center 
-  rounded-br-xl rounded-tl-xl text-base font-[600]
+  @apply relative px-7 py-[0.5rem] text-center 
+  text-base font-[600]
   cursor-pointer transition duration-300 shadow-md;
 }
 .btn-main:hover {
@@ -12,6 +12,14 @@
 }
 .btn-main:disabled:hover {
   @apply shadow-none bg-primary_darkGrey/20 text-primary_white;
+}
+
+.btn-styled {
+  @apply rounded-br-xl rounded-tl-xl;
+}
+
+.btn-rounded {
+  @apply rounded-lg;
 }
 
 .btn-primary {

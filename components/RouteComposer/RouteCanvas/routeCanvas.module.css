@@ -1,0 +1,36 @@
+.wrapper {
+  @apply relative 
+  max-w-full  
+  aspect-cropAspectRatio  rounded-lg overflow-hidden;
+}
+
+.controls-container {
+  @apply w-full flex 
+  gap-x-2
+  flex-row flex-1 items-center justify-end pt-2;
+}
+
+.container {
+  @apply absolute top-0 left-0 
+  flex flex-col justify-center items-center
+  w-full h-full bg-urban_white/90 z-10;
+}
+.container > h2 {
+  @apply font-bold text-3xl text-primary_green underline;
+}
+.steps {
+  @apply py-8;
+}
+.step {
+  @apply text-primary_darkGrey
+  w-[80%] mx-auto
+  py-4 border-b border-primary_green
+  flex flex-row flex-1 gap-x-5 items-center;
+}
+.action-title {
+  @apply min-w-[40%]
+  uppercase break-normal font-bold text-xl  text-primary_green;
+}
+.step p {
+  @apply font-normal text-left;
+}

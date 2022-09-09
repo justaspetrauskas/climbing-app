@@ -4,8 +4,9 @@ import { Line } from "react-konva";
 import { drawLine } from "./tools";
 interface RouteLineProps {
   jointCoords: number[][];
+  lineColor: string;
 }
-const RouteLine = ({ jointCoords }: RouteLineProps) => {
+const RouteLine = ({ jointCoords, lineColor = "blue" }: RouteLineProps) => {
   const lineRef = useRef<Konva.Line>(null);
   const [flattenedPoints, setFlattenedPoints] = useState<number[]>([]);
   useEffect(() => {
@@ -20,7 +21,7 @@ const RouteLine = ({ jointCoords }: RouteLineProps) => {
       ref={lineRef}
       points={flattenedPoints}
       tension={0.5}
-      stroke={`blue`}
+      stroke={lineColor}
       shadowColor="white"
       shadowBlur={2}
       strokeWidth={3}

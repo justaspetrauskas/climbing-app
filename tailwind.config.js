@@ -9,6 +9,9 @@ module.exports = {
       boxShadow: {
         light: "0 0 30px -12px rgba(0, 0, 0, 0.3)",
       },
+      aspectRatio: {
+        cropAspectRatio: "4 / 3",
+      },
       colors: {
         urban_white: "#F3F3F3",
         urban_black: "#121b22",

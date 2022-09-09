@@ -9,6 +9,12 @@ interface ImageLayerProps {
 const ImageLayer = ({ imageUrl }: ImageLayerProps) => {
   const [image] = useImage(imageUrl);
 
+  useEffect(() => {
+    if (image) {
+      console.log("Image file", image.height);
+    }
+  }, []);
+
   return <Image image={image} />;
 };
 

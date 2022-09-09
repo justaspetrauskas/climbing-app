@@ -5,7 +5,7 @@ import { selectImageUploadState } from "../../../redux/store";
 import DropZone from "../../DropZone/DropZone";
 import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import FormLayout from "../FormLayout";
-import ImageCropper from "./imageCropper";
+import ImageCropper from "./ImageCropper";
 import style from "./imageUpload.module.css";
 
 const ImageUpload = () => {

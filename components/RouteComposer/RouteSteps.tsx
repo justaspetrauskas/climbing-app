@@ -1,9 +1,15 @@
+import dynamic from "next/dynamic";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectRouteComposerState } from "../../redux/store";
 import ImageUpload from "./ImageUpload/ImageUpload";
+
 import RouteDetailsForm from "./RouteDetails/RouteDetailsForm";
 import RouteLocation from "./RouteLocation/RouteLocation";
+
+const RouteCanvas = dynamic(() => import("./RouteCanvas/RouteCanvas"), {
+  ssr: false,
+});
 
 const RouteSteps = () => {
   const { currentStepIndex } = useSelector(selectRouteComposerState);
@@ -18,7 +24,7 @@ const RouteSteps = () => {
     case 2:
       return <ImageUpload />;
     case 3:
-      return <div>one last peek</div>;
+      return <RouteCanvas />;
     case 4:
       return <div>one last peek</div>;
     default:

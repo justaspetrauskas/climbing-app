@@ -2,7 +2,7 @@ import React from "react";
 import style from "./inputfield.module.css";
 
 interface InputFieldContainerProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   label?: string;
 }
 const InputFieldContainer = ({ children, label }: InputFieldContainerProps) => {
