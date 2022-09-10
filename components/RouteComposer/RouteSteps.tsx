@@ -27,7 +27,7 @@ const RouteSteps = () => {
     case 3:
       return <RouteCanvas />;
     case 4:
-      return <RouteSubmit/>;
+      return <RouteSubmit />;
     default:
       return <RouteDetailsForm />;
   }

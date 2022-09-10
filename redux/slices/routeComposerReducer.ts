@@ -85,7 +85,7 @@ export const routeComposerSlice = createSlice({
     },
     setValidateStep: (state, action: PayloadAction<boolean>) => {
       // check if current stepIndex is not larger than the length of steps
-      console.log(state.activeStep);
+      // console.log(state.activeStep);
       state.activeStep.validated = action.payload;
     },
   },

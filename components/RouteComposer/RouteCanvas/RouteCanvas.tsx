@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import ImageLayer from "./ImageLayer";
 import RouteLine from "./RouteLine";
 import RouteJoints from "./RouteJoints";
-import { isWithinAnyElement, isWithinCanvas } from "./tools";
+import { isWithinAnyElement, isWithinCanvas, responsivePoints } from "./tools";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setJointCoords,
@@ -48,6 +48,8 @@ function RouteCanvas() {
   const [jointRadius, setJointRadius] = useState(8);
   const [withinCanvasEl, setWithinCanvasEl] = useState(true);
 
+  const [translatedCoords, setTranslatedCoords] = useState<number[][]>([]);
+
   useEffect(() => {
     const handleResize = () => {
       if (parentContainerRef.current) {
@@ -60,15 +62,13 @@ function RouteCanvas() {
           height: parentContainerRef.current.clientHeight,
         });
         setJointRadius(Math.ceil(ratio * radiusMultiplier));
-
-        // resize points
       }
     };
     handleResize();
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [jointCoords]);
 
   useEffect(() => {
     if (jointCoords.length > 2) {
@@ -80,22 +80,41 @@ function RouteCanvas() {
   }, [jointCoords]);
 
   useEffect(() => {
-    console.log(jointRadius);
-  }, [jointRadius]);
+    if (jointCoords) {
+      // resize points
+      const translatedJointCords = jointCoords.map((joint) => {
+        const translatedX = canvasSize.width * joint[0];
+        const translatedY = canvasSize.height * joint[1];
+        return [translatedX, translatedY];
+      });
+      console.log("jointCoords coordinates", jointCoords);
+      setTranslatedCoords(translatedJointCords);
+      console.log("Adjusted coordinates", translatedCoords);
+    }
+  }, [jointCoords, canvasSize]);
 
   const handleClick = (e: any) => {
     const clickPos = e.target.getStage().getPointerPosition();
     setWithinCanvasEl(true);
     //convert to array
     let convertedCoords = Object.values(clickPos) as number[];
+    // make poinst responsive
+    const responsiveCoords = responsivePoints(
+      parentContainerRef,
+      convertedCoords
+    );
+    console.log(jointCoords);
+    console.log(responsiveCoords);
+    // console.log("responsiveCoords: ", responsiveCoords);
     //check if not on the any other point
     const insideElement: boolean = isWithinAnyElement(
       jointCoords,
-      convertedCoords,
+      responsiveCoords,
       jointRadius
     );
+    dispatch(setJointCoords(responsiveCoords));
 
-    if (!insideElement && !editMode) dispatch(setJointCoords(convertedCoords));
+    // if (!insideElement && !editMode) dispatch(setJointCoords(responsiveCoords));
     if (insideElement && editMode && jointCoords.length > 1) {
       // remove the joint
       const jointsCopy = [...jointCoords];
@@ -168,16 +187,16 @@ function RouteCanvas() {
               <RouteLine
                 lineColor={lineColor}
                 lineClick={handleLineClick}
-                jointCoords={jointCoords}
+                jointCoords={translatedCoords}
               />
             </Layer>
             <Layer>
-              {jointCoords.length > 0 &&
-                jointCoords.map((joint, i) => (
+              {translatedCoords.length > 0 &&
+                translatedCoords.map((joint, i) => (
                   <RouteJoints
                     key={i}
                     circleRadius={
-                      i === 0 || i === jointCoords.length - 1
+                      i === 0 || i === translatedCoords.length - 1
                         ? jointRadius * 1.6
                         : jointRadius
                     }
@@ -188,7 +207,7 @@ function RouteCanvas() {
                     handleMouseDown={handleMouseDown}
                     draggable={withinCanvasEl}
                     jointColor={
-                      i === 0 || i === jointCoords.length - 1
+                      i === 0 || i === translatedCoords.length - 1
                         ? "white"
                         : jointColor
                     }

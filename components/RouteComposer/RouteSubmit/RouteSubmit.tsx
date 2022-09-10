@@ -5,7 +5,15 @@ import InputField from "../../FormElements/InputField";
 import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import { selectNewRouteState } from "../../../redux/store";
 import { useSelector } from "react-redux";
-import RouteCanvasEl from "../../UILayout/RouteCanvasElement/RouteCanvasEl";
+
+import dynamic from "next/dynamic";
+
+const RouteCanvasEl = dynamic(
+  () => import("../../UILayout/RouteCanvasElement/RouteCanvasEl"),
+  {
+    ssr: false,
+  }
+);
 
 const RouteSubmit = () => {
   const { title, difficulty, imageUrl, routeCoordinates } =

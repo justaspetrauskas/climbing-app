@@ -49,3 +49,16 @@ export const isWithinAnyElement = (
 
   return isTrue;
 };
+
+export const responsivePoints = (
+  containerRef: React.RefObject<HTMLDivElement>,
+  coordinates: number[]
+) => {
+  const { clientHeight, clientWidth } = containerRef.current!;
+  const [xCoord, yCoord] = coordinates;
+
+  const respXPos = xCoord / clientWidth;
+  const respYPos = yCoord / clientHeight;
+
+  return [respXPos, respYPos];
+};

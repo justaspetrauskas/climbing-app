@@ -97,7 +97,6 @@ const RouteCanvasEl = ({
               />
             ))}
         </Layer>
-        <Layer></Layer>
       </Stage>
     </div>
   );
