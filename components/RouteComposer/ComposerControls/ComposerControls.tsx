@@ -22,24 +22,26 @@ const ComposerControls = () => {
     console.log("currentStepIndex: ", currentStepIndex);
   }, [steps, activeStep]);
 
-  const clickBackHandler = (e: MouseEvent) => {
-    e.preventDefault();
+  const clickBackHandler = () => {
     dispatch(goToPrevStep());
   };
 
-  const clickNextHandler = (e: MouseEvent) => {
-    e.preventDefault();
+  const clickNextHandler = () => {
+    console.log(activeStep);
     dispatch(goToNextStep());
   };
 
   return (
     <div className={style["controls-wrapper"]}>
       <div className={style["controls-container"]}>
-        <Button type="Secondary" clickHandler={(e) => clickBackHandler(e)}>
+        <Button type="Secondary" clickHandler={clickBackHandler}>
           Back
         </Button>
-        <Button disabled={false} clickHandler={(e) => clickNextHandler(e)}>
-          Next
+        <Button
+          disabled={!activeStep.validated}
+          clickHandler={clickNextHandler}
+        >
+          Next Step
         </Button>
       </div>
     </div>

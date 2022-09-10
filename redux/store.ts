@@ -4,6 +4,7 @@ import NewRouteReducer from "./slices/newRouteReducer";
 import MapLocationReducer from "./slices/mapLocationReducer";
 import ImageUploadReducer from "./slices/imageUploadReducer";
 import RouteComposerReducer from "./slices/routeComposerReducer";
+import CanvasReducer from "./slices/canvasState";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     mapLocation: MapLocationReducer,
     imageUpload: ImageUploadReducer,
     routeComposer: RouteComposerReducer,
+    canvasState: CanvasReducer,
   },
 });
 
@@ -23,3 +25,5 @@ export const selectMapLocationState = (state: RootState) => state.mapLocation;
 export const selectImageUploadState = (state: RootState) => state.imageUpload;
 export const selectRouteComposerState = (state: RootState) =>
   state.routeComposer;
+
+export const selectCanvasState = (state: RootState) => state.canvasState;

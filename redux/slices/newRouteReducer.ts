@@ -9,7 +9,7 @@ interface newRouteState {
   author: string; // userId
   imageUrl: string;
   routeLocation: Location | null;
-  jointCoords: number[][];
+  routeCoordinates: number[][];
   // filteredGenres: string[] | [];
 }
 
@@ -22,7 +22,7 @@ const initialState: newRouteState = {
   author: "",
   imageUrl: "",
   routeLocation: null,
-  jointCoords: [[]],
+  routeCoordinates: [],
 };
 
 export const newRouteSlice = createSlice({
@@ -30,32 +30,27 @@ export const newRouteSlice = createSlice({
   initialState,
   reducers: {
     setImageUrl: (state, action: PayloadAction<string>) => {
-      console.log("new image", action.payload);
       state.imageUrl = action.payload;
     },
     setRouteLocation: (state, action: PayloadAction<Location>) => {
       state.routeLocation = action.payload;
     },
-    setJointCoords: (state, action: PayloadAction<number[]>) => {
-      state.jointCoords.push(action.payload);
+    setRoute: (state, action: PayloadAction<number[][]>) => {
+      state.routeCoordinates = action.payload;
       // filter out all empty arrays
-      const onlyFullArrs = state.jointCoords.filter(
-        (joint) => joint.length > 1
-      );
-      state.jointCoords = onlyFullArrs;
+      // const onlyFullArrs = state.jointCoords.filter(
+      //   (joint) => joint.length > 1
+      // );
+      // state.jointCoords = onlyFullArrs;
     },
     updateJointCoords: (state, action: PayloadAction<number[][]>) => {
-      state.jointCoords = action.payload;
+      state.routeCoordinates = action.payload;
     },
   },
   extraReducers: {},
 });
 
-export const {
-  setImageUrl,
-  setRouteLocation,
-  setJointCoords,
-  updateJointCoords,
-} = newRouteSlice.actions;
+export const { setImageUrl, setRouteLocation, setRoute, updateJointCoords } =
+  newRouteSlice.actions;
 
 export default newRouteSlice.reducer;

@@ -1,6 +1,7 @@
 import Konva from "konva";
 import React, { useRef } from "react";
 import { Circle, Layer, Text } from "react-konva";
+
 interface RouteJointsProps {
   circleRadius: number;
   canvasWidth: number;
@@ -26,7 +27,7 @@ const RouteJoints = ({
   };
 
   const handleMouseClick = () => {
-    console.log(circleRef.current, " says hello");
+    console.log("says hello");
   };
 
   return (
@@ -39,8 +40,8 @@ const RouteJoints = ({
       draggable={draggable}
       onDragMove={handleDragMove}
       onMouseDown={handleMouseDown}
-      onMouseOver={handleMouseOver}
-      onMouseClick={handleMouseClick}
+      // onMouseOver={handleMouseOver}
+      // onMouseClick={handleMouseClick}
       //   onMouseLeave={scaleDown}
     />
   );

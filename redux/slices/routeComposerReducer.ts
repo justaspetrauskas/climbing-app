@@ -83,14 +83,14 @@ export const routeComposerSlice = createSlice({
       state.currentStepIndex = action.payload;
       state.activeStep = formSteps[state.currentStepIndex];
     },
-    validateStep: (state, action: PayloadAction<number>) => {
+    setValidateStep: (state, action: PayloadAction<boolean>) => {
       // check if current stepIndex is not larger than the length of steps
-
-      state.activeStep.validated = !state.activeStep.validated;
+      console.log(state.activeStep);
+      state.activeStep.validated = action.payload;
     },
   },
 });
 
-export const { goToNextStep, goToPrevStep, goToStep, validateStep } =
+export const { goToNextStep, goToPrevStep, goToStep, setValidateStep } =
   routeComposerSlice.actions;
 export default routeComposerSlice.reducer;

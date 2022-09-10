@@ -11,14 +11,20 @@ import { isWithinAnyElement, isWithinCanvas } from "./tools";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setJointCoords,
+  setValidated,
   updateJointCoords,
-} from "../../../redux/slices/newRouteReducer";
-import { selectJointCoords, selectNewRouteState } from "../../../redux/store";
+} from "../../../redux/slices/canvasState";
+import { setRoute } from "../../../redux/slices/newRouteReducer";
+import {
+  selectCanvasState,
+  selectNewRouteState,
+  selectRouteComposerState,
+} from "../../../redux/store";
 import FormLayout from "../FormLayout";
-import useImage from "use-image";
 import CanvasControls from "./CanvasControls";
 import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import CanvasExplanation from "./CanvasExplanation";
+import { setValidateStep } from "../../../redux/slices/routeComposerReducer";
 
 const radiusMultiplier: number = 5;
 const lineColor: string = "#274546";
@@ -26,11 +32,10 @@ const jointColor: string = "#ffd447";
 
 function RouteCanvas() {
   const session = useSession();
-
   const { imageUrl } = useSelector(selectNewRouteState);
-  const [image] = useImage(imageUrl);
+
   const dispatch = useDispatch();
-  const jointCoords = useSelector(selectJointCoords);
+  const { jointCoords, howToEdit, editMode } = useSelector(selectCanvasState);
 
   const parentContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<Konva.Stage>(null);
@@ -41,12 +46,7 @@ function RouteCanvas() {
   });
 
   const [jointRadius, setJointRadius] = useState(8);
-
   const [withinCanvasEl, setWithinCanvasEl] = useState(true);
-
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -59,7 +59,7 @@ function RouteCanvas() {
           width: parentContainerRef.current.clientWidth,
           height: parentContainerRef.current.clientHeight,
         });
-        setJointRadius(ratio * radiusMultiplier);
+        setJointRadius(Math.ceil(ratio * radiusMultiplier));
 
         // resize points
       }
@@ -68,11 +68,20 @@ function RouteCanvas() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [image]);
+  }, [imageUrl]);
 
   useEffect(() => {
-    console.log(image?.height, image?.width);
-  }, [image]);
+    if (jointCoords.length > 2) {
+      dispatch(setValidateStep(true));
+      dispatch(setRoute(jointCoords));
+    } else {
+      dispatch(setValidateStep(false));
+    }
+  }, [jointCoords]);
+
+  useEffect(() => {
+    console.log(jointRadius);
+  }, [jointRadius]);
 
   const handleClick = (e: any) => {
     const clickPos = e.target.getStage().getPointerPosition();
@@ -86,11 +95,19 @@ function RouteCanvas() {
       jointRadius
     );
 
-    if (!insideElement) dispatch(setJointCoords(convertedCoords));
+    if (!insideElement && !editMode) dispatch(setJointCoords(convertedCoords));
+    if (insideElement && editMode && jointCoords.length > 1) {
+      // remove the joint
+      const jointsCopy = [...jointCoords];
+      const filteredJoints = jointsCopy.filter(
+        (joint) => joint[0] !== clickPos.x && joint[1] !== clickPos.y
+      );
+      dispatch(updateJointCoords(filteredJoints));
+    }
   };
 
   const handleDragMove = (e: any) => {
-    console.log(e, typeof e);
+    // console.log(e, typeof e);
     const jointIndex = e.target.index;
     let jointPos = e.target.getStage().getPointerPosition();
     const { width, height } = canvasSize;
@@ -99,7 +116,7 @@ function RouteCanvas() {
     const isWithinCanvasEl = isWithinCanvas(x, y, jointRadius, width, height);
     if (isWithinCanvasEl) {
       const jointsCopy = [...jointCoords];
-      jointsCopy[jointIndex - 1] = [x, y];
+      jointsCopy[jointIndex] = [x, y];
       dispatch(updateJointCoords(jointsCopy));
       setWithinCanvasEl(true);
     } else {
@@ -109,22 +126,32 @@ function RouteCanvas() {
   };
 
   const handleMouseDown = (e: any) => {
+    console.log("Mouse down action", e);
     // check if click is within canvas
     const jointPos = e.target.getStage().getPointerPosition();
-
     const { width, height } = canvasSize;
     const { x, y } = jointPos;
-    console.log("jointPos: ", x, y);
     const isWithinCanvasEl = isWithinCanvas(x, y, jointRadius, width, height);
     if (isWithinCanvasEl) setWithinCanvasEl(isWithinCanvasEl);
   };
-  if (imageUrl && image) {
+
+  const handleLineClick = (e: any) => {
+    // find position where clicked happend
+    const clickPos = e.target.getStage().getPointerPosition();
+    console.log("clicked on the line", clickPos);
+
+    // get current joint coords
+
+    // add points between neighbors
+  };
+
+  if (imageUrl) {
     return (
       <FormLayout>
         <InputFieldContainer label={"Draw a problem"} />
-
+        <CanvasControls />
         <div className={style.wrapper} ref={parentContainerRef}>
-          {/* <CanvasExplanation /> */}
+          {howToEdit && <CanvasExplanation />}
           <Stage
             ref={canvasRef}
             width={canvasSize.width}
@@ -138,14 +165,22 @@ function RouteCanvas() {
             onClick={handleClick}
           >
             <Layer>
-              <RouteLine lineColor={lineColor} jointCoords={jointCoords} />
+              <RouteLine
+                lineColor={lineColor}
+                lineClick={handleLineClick}
+                jointCoords={jointCoords}
+              />
             </Layer>
             <Layer>
               {jointCoords.length > 0 &&
                 jointCoords.map((joint, i) => (
                   <RouteJoints
                     key={i}
-                    circleRadius={jointRadius}
+                    circleRadius={
+                      i === 0 || i === jointCoords.length - 1
+                        ? jointRadius * 1.6
+                        : jointRadius
+                    }
                     canvasWidth={canvasSize.width}
                     canvasHeight={canvasSize.height}
                     jointCoords={joint}
@@ -162,7 +197,6 @@ function RouteCanvas() {
             </Layer>
           </Stage>
         </div>
-        <CanvasControls />
       </FormLayout>
     );
   } else {

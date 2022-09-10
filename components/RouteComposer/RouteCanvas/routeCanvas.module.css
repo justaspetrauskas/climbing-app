@@ -7,7 +7,7 @@
 .controls-container {
   @apply w-full flex 
   gap-x-2
-  flex-row flex-1 items-center justify-end pt-2;
+  flex-row flex-1 items-center justify-end pb-2;
 }
 
 .container {

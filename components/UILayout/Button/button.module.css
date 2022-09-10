@@ -11,7 +11,7 @@
   @apply bg-primary_darkGrey/20;
 }
 .btn-main:disabled:hover {
-  @apply shadow-none bg-primary_darkGrey/20 text-primary_white;
+  @apply shadow-md bg-primary_darkGrey/20 text-primary_white;
 }
 
 .btn-styled {
