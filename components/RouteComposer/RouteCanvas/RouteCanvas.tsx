@@ -68,7 +68,7 @@ function RouteCanvas() {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [imageUrl]);
+  }, []);
 
   useEffect(() => {
     if (jointCoords.length > 2) {
