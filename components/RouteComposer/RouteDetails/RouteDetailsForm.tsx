@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { setValidateStep } from "../../../redux/slices/routeComposerReducer";
 import InputField from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import FormLayout from "../FormLayout";
 import RouteFeatures from "../RouteFeatures/RouteFeatures";
@@ -14,7 +16,16 @@ interface RouteDetails {
   features: string[];
 }
 
+interface ValidationRules {
+  required?: boolean;
+  minChar?: boolean;
+  maxChar?: number;
+  minValue?: number;
+  maxValue?: number;
+}
+
 const RouteDetailsForm = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm({
     mode: "onChange",
     reValidateMode: "onSubmit",
@@ -32,26 +43,73 @@ const RouteDetailsForm = () => {
     grade: false,
     features: false,
   });
-  // useEffect(() => {
-  //   handleSubmit((data) => console.log(data));
-  // }, [data]);
 
   useEffect(() => {
-    // validation functionality
-    // name= between 1 and 20 characters, required
-    // description=between 0 and 200 character, not required
-    // grade number between 1 and 27, required
-    // features, not required
+    const numericFieldValidation = (value: number) => {
+      const rules = {
+        maxValue: 27,
+        minValue: 1,
+        required: true,
+      };
+
+      return value >= rules.minValue && value <= rules.maxValue;
+    };
+
+    const stringFieldValidation = (value: string, field: string) => {
+      const rules = {
+        minChar: 2,
+        maxChar: field === "title" ? 30 : 200,
+      };
+      const trimmedValue = value.trim();
+
+      return (
+        trimmedValue.length >= rules.minChar &&
+        trimmedValue.length <= rules.maxChar
+      );
+    };
+
+    const fieldIsValidated = (fieldName: string, value: string | number) => {
+      switch (typeof value) {
+        case "number":
+          return numericFieldValidation(value);
+        case "string":
+          return stringFieldValidation(value, fieldName);
+        default:
+          return stringFieldValidation(value, fieldName);
+      }
+    };
+    console.log(fieldIsValidated("title", routeDetails.title));
+    setValidatedField({
+      ...validatedFields,
+      title: fieldIsValidated("title", routeDetails.title),
+    });
+    // setValidatedField({
+    //   ...validatedFields,
+    //   grade: fieldIsValidated("grade", routeDetails.grade),
+    // });
   }, [routeDetails]);
+
+  // validation
+  useEffect(() => {
+    console.log(validatedFields);
+    if (validatedFields.title === true && validatedFields.grade === true) {
+      dispatch(setValidateStep(true));
+      // dispatch(setRoute(jointCoords));
+    } else {
+      dispatch(setValidateStep(false));
+    }
+  }, [validatedFields]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const inputName = e.target.name;
     const inputVal = e.target.value;
-    console.log(e.target.name);
     //
-    setRouteDetaisl({ ...routeDetails, [inputName]: inputVal });
+    setRouteDetaisl({
+      ...routeDetails,
+      [inputName]: inputName === "grade" ? parseInt(inputVal) : inputVal,
+    });
   };
   return (
     <FormLayout>
@@ -98,10 +156,10 @@ const RouteDetailsForm = () => {
           gradeVal={routeDetails.grade}
           onInputChange={handleInputChange}
         />
-        <RouteFeatures
+        {/* <RouteFeatures
           featuresVal={routeDetails.features}
           onInputChange={handleInputChange}
-        />
+        /> */}
       </form>
     </FormLayout>
   );
