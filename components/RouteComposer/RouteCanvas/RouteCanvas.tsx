@@ -7,7 +7,13 @@ import { useSession } from "next-auth/react";
 import ImageLayer from "./ImageLayer";
 import RouteLine from "./RouteLine";
 import RouteJoints from "./RouteJoints";
-import { isWithinAnyElement, isWithinCanvas, responsivePoints } from "./tools";
+import {
+  getCanvasToWindowRatio,
+  isWithinAnyElement,
+  isWithinCanvas,
+  responsivePoints,
+  translatePoints,
+} from "../../../lib/canvasTools";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setJointCoords,
@@ -26,7 +32,7 @@ import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldCo
 import CanvasExplanation from "./CanvasExplanation";
 import { setValidateStep } from "../../../redux/slices/routeComposerReducer";
 
-const radiusMultiplier: number = 5;
+const radiusMultiplier: number = 3;
 const lineColor: string = "#274546";
 const jointColor: string = "#ffd447";
 
@@ -45,33 +51,39 @@ function RouteCanvas() {
     height: 0,
   });
 
-  const [jointRadius, setJointRadius] = useState(8);
+  const [jointRadius, setJointRadius] = useState(6);
   const [withinCanvasEl, setWithinCanvasEl] = useState(true);
 
   const [translatedCoords, setTranslatedCoords] = useState<number[][]>([]);
 
+  // canvas resize
   useEffect(() => {
     const handleResize = () => {
       if (parentContainerRef.current) {
-        const ratio =
-          parentContainerRef.current.clientWidth /
-          parentContainerRef.current.clientHeight;
-
+        // canvas resize
         setCanvasSize({
           width: parentContainerRef.current.clientWidth,
           height: parentContainerRef.current.clientHeight,
         });
-        setJointRadius(Math.ceil(ratio * radiusMultiplier));
+
+        // joint resize
+        setJointRadius(
+          Math.round(
+            getCanvasToWindowRatio(window, parentContainerRef) *
+              radiusMultiplier
+          )
+        );
       }
     };
     handleResize();
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [jointCoords]);
+  }, [window]);
 
+  // validation
   useEffect(() => {
-    if (jointCoords.length > 2) {
+    if (jointCoords.length >= 2) {
       dispatch(setValidateStep(true));
       dispatch(setRoute(jointCoords));
     } else {
@@ -79,17 +91,13 @@ function RouteCanvas() {
     }
   }, [jointCoords]);
 
+  // point resize
   useEffect(() => {
     if (jointCoords) {
       // resize points
-      const translatedJointCords = jointCoords.map((joint) => {
-        const translatedX = canvasSize.width * joint[0];
-        const translatedY = canvasSize.height * joint[1];
-        return [translatedX, translatedY];
-      });
-      console.log("jointCoords coordinates", jointCoords);
-      setTranslatedCoords(translatedJointCords);
-      console.log("Adjusted coordinates", translatedCoords);
+      const { width, height } = canvasSize;
+      const translatedPoints = translatePoints(jointCoords, width, height);
+      setTranslatedCoords(translatedPoints);
     }
   }, [jointCoords, canvasSize]);
 
@@ -99,27 +107,22 @@ function RouteCanvas() {
     //convert to array
     let convertedCoords = Object.values(clickPos) as number[];
     // make poinst responsive
-    const responsiveCoords = responsivePoints(
-      parentContainerRef,
-      convertedCoords
-    );
-    console.log(jointCoords);
-    console.log(responsiveCoords);
-    // console.log("responsiveCoords: ", responsiveCoords);
-    //check if not on the any other point
+    const responsiveCoords = responsivePoints(canvasSize, convertedCoords);
+    //check if not on the any other point on the screen
     const insideElement: boolean = isWithinAnyElement(
-      jointCoords,
-      responsiveCoords,
+      translatedCoords,
+      convertedCoords,
       jointRadius
     );
-    dispatch(setJointCoords(responsiveCoords));
 
-    // if (!insideElement && !editMode) dispatch(setJointCoords(responsiveCoords));
+    if (!insideElement && !editMode) dispatch(setJointCoords(responsiveCoords));
     if (insideElement && editMode && jointCoords.length > 1) {
       // remove the joint
       const jointsCopy = [...jointCoords];
       const filteredJoints = jointsCopy.filter(
-        (joint) => joint[0] !== clickPos.x && joint[1] !== clickPos.y
+        (joint) =>
+          joint[0] !== responsiveCoords[0] &&
+          responsiveCoords[1] !== convertedCoords[1]
       );
       dispatch(updateJointCoords(filteredJoints));
     }
@@ -131,11 +134,14 @@ function RouteCanvas() {
     let jointPos = e.target.getStage().getPointerPosition();
     const { width, height } = canvasSize;
     const { x, y } = jointPos;
+
     // check if jointPos is within canvas
     const isWithinCanvasEl = isWithinCanvas(x, y, jointRadius, width, height);
     if (isWithinCanvasEl) {
+      // make points responsive
+      const responsiveXY = responsivePoints(canvasSize, [x, y]);
       const jointsCopy = [...jointCoords];
-      jointsCopy[jointIndex] = [x, y];
+      jointsCopy[jointIndex] = responsiveXY;
       dispatch(updateJointCoords(jointsCopy));
       setWithinCanvasEl(true);
     } else {
@@ -145,7 +151,6 @@ function RouteCanvas() {
   };
 
   const handleMouseDown = (e: any) => {
-    console.log("Mouse down action", e);
     // check if click is within canvas
     const jointPos = e.target.getStage().getPointerPosition();
     const { width, height } = canvasSize;

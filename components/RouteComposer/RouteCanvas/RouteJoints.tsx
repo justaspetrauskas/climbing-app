@@ -41,7 +41,6 @@ const RouteJoints = ({
       onDragMove={handleDragMove}
       onMouseDown={handleMouseDown}
       // onMouseOver={handleMouseOver}
-      // onMouseClick={handleMouseClick}
       //   onMouseLeave={scaleDown}
     />
   );

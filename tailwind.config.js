@@ -39,6 +39,13 @@ module.exports = {
           "0%": { transform: "translateY(-0.7rem)" },
           "100%": { transform: "translateY(-0.25rem)" },
         },
+        stepCompleted: {
+          "0%": { transform: "translateY(-0.7rem)" },
+          "100%": { transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        stepCompleted: "stepCompleted 1s ease-in-out",
       },
     },
   },

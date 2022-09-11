@@ -44,6 +44,24 @@
 .progress-step--completed svg {
   @apply fill-white transition;
 }
-.progress-step > i {
-  @apply border rounded-full p-[0.15rem] border-urban_white transition;
+
+i.step-completed {
+  @apply border 
+  overflow-hidden
+  rounded-full p-[0.15rem] border-urban_white transition;
+  animation: 300ms ease-in-out 0s 1 slideInFromBottom;
+}
+i.step-completed > svg {
+  animation: 300ms ease-in-out 300ms 1 slideInFromBottom;
+}
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+  }
+  90% {
+    transform: translateY(-30%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

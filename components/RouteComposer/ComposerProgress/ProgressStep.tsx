@@ -27,7 +27,7 @@ const ProgressStep = ({
       onClick={stepClickHandler}
     >
       {completed && (
-        <i>
+        <i className={style["step-completed"]}>
           <MdDone size={16} />
         </i>
       )}

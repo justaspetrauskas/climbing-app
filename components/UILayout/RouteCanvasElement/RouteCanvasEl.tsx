@@ -1,7 +1,11 @@
 import React, { useRef, useEffect, useState, useMemo } from "react";
 import Konva from "konva";
 import { Stage, Layer, Line, Circle } from "react-konva";
-import { drawLine } from "../../RouteComposer/RouteCanvas/tools";
+import {
+  drawLine,
+  getCanvasToWindowRatio,
+  translatePoints,
+} from "../../../lib/canvasTools";
 
 interface RouteCanvasElProps {
   imageUrl: string;
@@ -13,7 +17,7 @@ interface RouteCanvasElProps {
 const RouteCanvasEl = ({
   imageUrl,
   path,
-  radiusMultiplier = 6,
+  radiusMultiplier = 3,
   lineColor = "#274546",
   jointColor = "#ffd447",
 }: RouteCanvasElProps) => {
@@ -28,6 +32,7 @@ const RouteCanvasEl = ({
   });
 
   const [jointRadius, setJointRadius] = useState(8);
+  const [translatedPoints, setTranslatedPoints] = useState<number[][]>([]);
 
   useEffect(() => {
     console.log(path);
@@ -46,7 +51,12 @@ const RouteCanvasEl = ({
         });
         setJointRadius(Math.ceil(ratio * radiusMultiplier));
 
-        // resize points
+        setJointRadius(
+          Math.round(
+            getCanvasToWindowRatio(window, parentContainerRef) *
+              radiusMultiplier
+          )
+        );
       }
     };
     handleResize();
@@ -54,6 +64,15 @@ const RouteCanvasEl = ({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (path) {
+      // resize points
+      const { width, height } = canvasSize;
+      const translatedPoints = translatePoints(path, width, height);
+      setTranslatedPoints(translatedPoints);
+    }
+  }, [path, canvasSize]);
 
   return (
     <div
@@ -73,15 +92,15 @@ const RouteCanvasEl = ({
         <Layer>
           <Line
             ref={lineRef}
-            points={drawLine(path)}
+            points={drawLine(translatedPoints)}
             tension={0.5}
             stroke={lineColor}
             shadowColor="white"
             shadowBlur={2}
             strokeWidth={3}
           />
-          {path.length > 0 &&
-            path.map((joint, i) => (
+          {translatedPoints.length > 0 &&
+            translatedPoints.map((joint, i) => (
               <Circle
                 key={i}
                 ref={circleRef}

@@ -6,24 +6,25 @@ import style from "./routeDetailForm.module.css";
 import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
 
 interface RouteGradeSliderProps {
-  registerField: UseFormRegister<any>;
-  formfield: keyof Record<string, any>;
-  validationRules: { required?: boolean; pattern?: RegExp; maxLength?: number };
+  // registerField: UseFormRegister<any>;
+  // formfield: keyof Record<string, any>;
+  // validationRules: { required?: boolean; pattern?: RegExp; maxLength?: number };
+  gradeVal: string | number;
+  onInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 
 const RouteGradeSlider = ({
-  registerField,
-  validationRules,
-  formfield,
+  onInputChange,
+  gradeVal,
 }: RouteGradeSliderProps) => {
   const [currentGrade, setCurrentGrade] = useState(14);
   const [gradeLabel, setGradeLabel] = useState("7a");
 
   useEffect(() => {
-    if (routeGrades) {
-      let gradeLabel = routeGrades.find(
-        (grade) => grade.value === currentGrade
-      );
+    if (gradeVal) {
+      let gradeLabel = routeGrades.find((grade) => grade.value === gradeVal);
       setGradeLabel(gradeLabel!.label);
     }
   }, [currentGrade]);
@@ -31,6 +32,7 @@ const RouteGradeSlider = ({
   const changeGradeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     let currGrade = +e.target.value;
     setCurrentGrade(currGrade);
+    onInputChange(e);
   };
 
   return (
@@ -45,8 +47,9 @@ const RouteGradeSlider = ({
         max={27}
         min={1}
         step={1}
-        {...registerField(formfield, validationRules)}
-        // value={currentGrade}
+        name={"grade"}
+        // {...registerField(formfield, validationRules)}
+        value={gradeVal}
         onChange={changeGradeHandler}
       />
 

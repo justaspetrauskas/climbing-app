@@ -51,14 +51,43 @@ export const isWithinAnyElement = (
 };
 
 export const responsivePoints = (
-  containerRef: React.RefObject<HTMLDivElement>,
+  canvasSize: { width: number; height: number },
   coordinates: number[]
 ) => {
-  const { clientHeight, clientWidth } = containerRef.current!;
+  const { width, height } = canvasSize;
   const [xCoord, yCoord] = coordinates;
 
-  const respXPos = xCoord / clientWidth;
-  const respYPos = yCoord / clientHeight;
+  const respXPos = xCoord / width;
+  const respYPos = yCoord / height;
 
   return [respXPos, respYPos];
+};
+
+export const translatePoints = (
+  path: number[][],
+  canvasW: number,
+  canwasH: number
+) => {
+  const translatedCords = path.map((joint) => {
+    const translatedX = canvasW * joint[0];
+    const translatedY = canwasH * joint[1];
+    return [translatedX, translatedY];
+  });
+
+  return translatedCords;
+};
+
+export const getCanvasToWindowRatio = (
+  window: Window,
+  canvas: React.RefObject<HTMLDivElement>
+) => {
+  let windowToContainerRatio = 0;
+
+  if (canvas.current && window) {
+    const { innerWidth, innerHeight } = window;
+    const { clientWidth, clientHeight } = canvas.current;
+    windowToContainerRatio =
+      (innerWidth * innerHeight) / (clientWidth * clientHeight);
+  }
+  return windowToContainerRatio;
 };

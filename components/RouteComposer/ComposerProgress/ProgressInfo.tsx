@@ -13,6 +13,8 @@ const ProgressInfo = () => {
 
   const stepClickHandler = (stepIndex: number) => {
     // should be able to go only to validated step
+    console.log(steps[stepIndex]);
+    // if (steps[stepIndex].validated)
     dispatch(goToStep(stepIndex));
   };
   return (

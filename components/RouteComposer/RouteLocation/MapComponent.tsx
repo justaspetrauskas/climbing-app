@@ -32,7 +32,7 @@ const MapComponent = () => {
     return <div>Loading...</div>;
   } else {
     return (
-      <div className={style["map-container"]}>
+      <div className={`${style["map-container"]} mt-2`}>
         <Map mapClickHandler={mapClickHandler}>
           {routeLocation && (
             <MarkerF

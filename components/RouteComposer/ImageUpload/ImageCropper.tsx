@@ -1,10 +1,13 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Cropper, { Area, Point } from "react-easy-crop";
 import { useDispatch } from "react-redux";
 import { getCroppedImage } from "../../../lib/cropImage";
 import { setImagePreview } from "../../../redux/slices/imageUploadReducer";
 import { setImageUrl } from "../../../redux/slices/newRouteReducer";
-import { goToNextStep } from "../../../redux/slices/routeComposerReducer";
+import {
+  goToNextStep,
+  setValidateStep,
+} from "../../../redux/slices/routeComposerReducer";
 import Button from "../../UILayout/Button/Button";
 import style from "./imageUpload.module.css";
 
@@ -45,6 +48,8 @@ const ImageCropper = ({ imageSrc }: ImageCropperProps) => {
       dispatch(setImageUrl(croppedImage!));
       // set preview image to ""
       // dispatch(setImagePreview(""));
+      // validate?
+      dispatch(setValidateStep(true));
       // go to next step
       dispatch(goToNextStep());
     } catch (error) {

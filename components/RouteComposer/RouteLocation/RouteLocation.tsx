@@ -11,6 +11,7 @@ import { setRouteLocation } from "../../../redux/slices/newRouteReducer";
 import MapComponent from "./MapComponent";
 import Button from "../../UILayout/Button/Button";
 import { setUserLocation } from "../../../redux/slices/mapLocationReducer";
+import { setValidateStep } from "../../../redux/slices/routeComposerReducer";
 
 const validLatitude = new RegExp("^[-+]?([1-8]?[1-9]|[1-9]0)\\.{1}\\d{1,18}$");
 const validLongitude = new RegExp(
@@ -42,6 +43,9 @@ const RouteLocation = () => {
     // if both are valid store to redux as numbers
     if (isValidLng && isValidLat) {
       dispatch(setRouteLocation({ lat: +latitude, lng: +longitude }));
+      dispatch(setValidateStep(true));
+    } else {
+      dispatch(setValidateStep(false));
     }
     // show error message
   }, [latitude, longitude]);
@@ -110,12 +114,15 @@ const RouteLocation = () => {
               />
             </span>
           </div>
+        </div>
+      </InputFieldContainer>
+      <InputFieldContainer label={"...or choose on the map..."}>
+        <div className="inline-block float-right">
           <Button type="Primary" size="sm" clickHandler={locateMe}>
             Locate me
           </Button>
         </div>
-      </InputFieldContainer>
-      <InputFieldContainer label={"...or choose on the map..."}>
+
         <MapComponent />
       </InputFieldContainer>
     </FormLayout>

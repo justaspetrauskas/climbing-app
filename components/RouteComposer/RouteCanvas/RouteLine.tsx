@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-konva";
 import { useSelector } from "react-redux";
 import { selectJointCoords, selectNewRouteState } from "../../../redux/store";
-import { drawLine } from "./tools";
+import { drawLine } from "../../../lib/canvasTools";
 interface RouteLineProps {
   jointCoords: number[][];
   lineColor: string;
