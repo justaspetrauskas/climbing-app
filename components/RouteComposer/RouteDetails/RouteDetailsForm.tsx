@@ -38,6 +38,10 @@ const RouteDetailsForm = () => {
 
   useEffect(() => {
     // validation functionality
+    // name= between 1 and 20 characters, required
+    // description=between 0 and 200 character, not required
+    // grade number between 1 and 27, required
+    // features, not required
   }, [routeDetails]);
 
   const handleInputChange = (
