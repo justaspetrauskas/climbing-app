@@ -1,7 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import nextConnect from "next-connect";
-
-import database from "../../../middlewares/database.middleware";
 import User from "../../../models/User";
 import dbConnect from "../../../lib/dbConnect";
 import handler from "../../../lib/handler";

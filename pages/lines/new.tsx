@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { GetServerSideProps } from "next";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import BodyLayout from "../../components/BodyLayout/BodyLayout";
 import ImageUpload from "../../components/ImageUpload/ImageUpload";
 import PageLayout from "../../components/PageLayout/PageLayout";
@@ -14,6 +14,7 @@ import SectionLayout from "../../components/SectionLayout/SectionLayout";
 import SectionHeader from "../../components/SectionLayout/SectionHeader";
 import SectionRow from "../../components/SectionLayout/SectionRow";
 import RouteComposer from "../../components/RouteComposer/RouteComposer";
+import { setAuthor } from "../../redux/slices/newRouteReducer";
 
 // const RouteCanvas = dynamic(
 //   () => import("../../components/RouteCanvas/RouteCanvas"),
@@ -23,9 +24,18 @@ import RouteComposer from "../../components/RouteComposer/RouteComposer";
 // );
 
 const NewLine = () => {
-  const { status } = useSession({ required: true });
+  const { status, data } = useSession({ required: true });
+
   const routeState = useSelector(selectNewRouteState);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data!.user) {
+      // @ts-ignore
+      dispatch(setAuthor(data!.user.id));
+    }
+  }, [data]);
   // if (status === "loading") {
   //   return <div>Loading...</div>;
   // }
@@ -37,12 +47,7 @@ const NewLine = () => {
           <h2>Create a route</h2>
           <p>Create your route and share with others</p>
         </SectionHeader>
-
         <RouteComposer />
-
-        {/* <ImageUpload /> */}
-        {/* <RouteLocation /> */}
-        {/* {routeState.imageUrl && <RouteCanvas imageUrl={routeState.imageUrl} />} */}
       </SectionLayout>
     </PageLayout>
   );

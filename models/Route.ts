@@ -31,7 +31,7 @@ const routeSchema: Schema = new Schema({
   },
   features: [String],
   path: [[Number]],
-  author: String,
+  author: { type: Schema.Types.ObjectId, ref: "UserSchema" },
   imgUrl: String,
 });
 

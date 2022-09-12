@@ -35,7 +35,6 @@ const formSteps: Step[] = [
     stepIndex: 3,
   },
   { label: "Draw a problem", active: false, validated: false, stepIndex: 4 },
-  { label: "One Last Peek", active: false, validated: false, stepIndex: 5 },
 ];
 
 const initialState: routeComposerState = {

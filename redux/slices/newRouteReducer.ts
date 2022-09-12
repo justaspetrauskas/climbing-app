@@ -43,6 +43,9 @@ export const newRouteSlice = createSlice({
       // );
       // state.jointCoords = onlyFullArrs;
     },
+    setAuthor: (state, action: PayloadAction<string>) => {
+      state.author = action.payload;
+    },
     setRouteDetails: (state, action: PayloadAction<Record<string, any>>) => {
       const { title, description, grade, features } = action.payload;
       state.title = title;
@@ -63,6 +66,7 @@ export const {
   setRouteLocation,
   setRoute,
   updateJointCoords,
+  setAuthor,
 } = newRouteSlice.actions;
 
 export default newRouteSlice.reducer;

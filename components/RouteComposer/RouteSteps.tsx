@@ -6,7 +6,6 @@ import ImageUpload from "./ImageUpload/ImageUpload";
 
 import RouteDetailsForm from "./RouteDetails/RouteDetailsForm";
 import RouteLocation from "./RouteLocation/RouteLocation";
-import RouteSubmit from "./RouteSubmit/RouteSubmit";
 
 const RouteCanvas = dynamic(() => import("./RouteCanvas/RouteCanvas"), {
   ssr: false,
@@ -14,9 +13,9 @@ const RouteCanvas = dynamic(() => import("./RouteCanvas/RouteCanvas"), {
 
 const RouteSteps = () => {
   const { currentStepIndex } = useSelector(selectRouteComposerState);
-  useEffect(() => {
-    console.log("currentStepIndex", currentStepIndex);
-  }, [currentStepIndex]);
+  // useEffect(() => {
+  //   console.log("currentStepIndex", currentStepIndex);
+  // }, [currentStepIndex]);
   switch (currentStepIndex) {
     case 0:
       return <RouteDetailsForm />;
@@ -26,8 +25,6 @@ const RouteSteps = () => {
       return <ImageUpload />;
     case 3:
       return <RouteCanvas />;
-    case 4:
-      return <RouteSubmit />;
     default:
       return <RouteDetailsForm />;
   }
