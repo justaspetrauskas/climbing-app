@@ -14,33 +14,21 @@ const features = [
   "very overhang",
 ];
 
-const RouteFeatures = () => {
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+interface RouteFeaturesProps {
+  featureVals: [string];
+  selectHandler: (feature: string) => void;
+}
 
-  useEffect(() => {
-    console.log(selectedFeatures);
-  }, [selectedFeatures]);
-
-  const selectFeature = (feature: string) => {
-    if (!selectedFeatures.includes(feature))
-      setSelectedFeatures([...selectedFeatures, feature]);
-
-    if (selectedFeatures.includes(feature)) {
-      const tempFeatures = [...selectedFeatures];
-      const filteredFeature = tempFeatures.filter((f) => f !== feature);
-      setSelectedFeatures(filteredFeature);
-    }
-  };
-
+const RouteFeatures = ({ featureVals, selectHandler }: RouteFeaturesProps) => {
   return (
     <InputFieldContainer label={"Route features"}>
       <div className={style.wrapper}>
         {features.map((feature, index) => (
           <SingleFeature
             key={index}
-            selected={selectedFeatures.includes(feature)}
+            selected={featureVals ? featureVals.includes(feature) : false}
             feature={feature}
-            selectHandler={(feature: string) => selectFeature(feature)}
+            selectHandler={(feature: string) => selectHandler(feature)}
           />
         ))}
       </div>

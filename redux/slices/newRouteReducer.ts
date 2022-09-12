@@ -43,6 +43,13 @@ export const newRouteSlice = createSlice({
       // );
       // state.jointCoords = onlyFullArrs;
     },
+    setRouteDetails: (state, action: PayloadAction<Record<string, any>>) => {
+      const { title, description, grade, features } = action.payload;
+      state.title = title;
+      state.description = description;
+      state.difficulty = +grade;
+      state.features = features;
+    },
     updateJointCoords: (state, action: PayloadAction<number[][]>) => {
       state.routeCoordinates = action.payload;
     },
@@ -50,7 +57,12 @@ export const newRouteSlice = createSlice({
   extraReducers: {},
 });
 
-export const { setImageUrl, setRouteLocation, setRoute, updateJointCoords } =
-  newRouteSlice.actions;
+export const {
+  setImageUrl,
+  setRouteDetails,
+  setRouteLocation,
+  setRoute,
+  updateJointCoords,
+} = newRouteSlice.actions;
 
 export default newRouteSlice.reducer;
