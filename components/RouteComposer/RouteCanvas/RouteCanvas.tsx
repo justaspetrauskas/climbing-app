@@ -32,7 +32,7 @@ import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldCo
 import CanvasExplanation from "./CanvasExplanation";
 import { setValidateStep } from "../../../redux/slices/routeComposerReducer";
 
-const radiusMultiplier: number = 3;
+const radiusMultiplier: number = 1.8;
 const lineColor: string = "#274546";
 const jointColor: string = "#ffd447";
 

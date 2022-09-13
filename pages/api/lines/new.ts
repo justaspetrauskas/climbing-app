@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import User from "../../../models/User";
 import dbConnect from "../../../lib/dbConnect";
 import handler from "../../../lib/handler";
+import Route from "../../../models/Route";
 
 interface ResponseData {
   error?: string;
@@ -15,7 +16,9 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
     // check if user exist by user id
     const user = await User.findById(JSON.parse(req.body).author);
     if (user) {
-      const newRoute;
+      const newRoute = new Route(JSON.parse(req.body));
+      await newRoute.save();
+      res.status(200);
     }
   } catch (err) {
     console.log(err);
