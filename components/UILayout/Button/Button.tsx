@@ -9,6 +9,7 @@ interface ButtonProps {
   title?: string;
   disabled?: boolean;
   styled?: "styled" | "rounded";
+  active?: boolean;
 }
 
 const Button = ({
@@ -19,6 +20,7 @@ const Button = ({
   disabled = false,
   size = "md",
   styled = "styled",
+  active = false,
 }: ButtonProps) => {
   const buttonClickHandler = () => {
     console.log("i'm here", disabled);
@@ -37,7 +39,9 @@ const Button = ({
           : size === "md"
           ? style["btn-md"]
           : style["btn-lg"]
-      } ${styled === "styled" ? style["btn-styled"] : style["btn-rounded"]} `}
+      } ${styled === "styled" ? style["btn-styled"] : style["btn-rounded"]} ${
+        active ? style["active"] : ""
+      } `}
       onClick={buttonClickHandler}
       type="button"
       title={disabled ? "Button is disabled" : title}

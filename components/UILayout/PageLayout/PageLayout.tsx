@@ -1,8 +1,8 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import style from "../../styles/pageLayout.module.css";
-import Header from "../Header/Header";
+import style from "./pageLayout.module.css";
+import Header from "../../Header/Header";
 
 interface PageLayoutProp {
   children: React.ReactNode;

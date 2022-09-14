@@ -18,6 +18,7 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
     if (user) {
       const newRoute = new Route(JSON.parse(req.body));
       await newRoute.save();
+      console.log("success", newRoute.title);
       res.status(200);
     }
   } catch (err) {

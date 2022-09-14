@@ -1,0 +1,16 @@
+.features-header {
+  @apply w-full flex flex-row 
+  relative py-2
+  items-center justify-center gap-x-4;
+}
+.options-wrapper {
+  @apply py-2 border-t border-b;
+}
+.container {
+  @apply grid grid-flow-col gap-x-4;
+}
+.feature-item {
+  @apply text-center py-3 
+  transition
+  border border-primary_darkGrey;
+}
