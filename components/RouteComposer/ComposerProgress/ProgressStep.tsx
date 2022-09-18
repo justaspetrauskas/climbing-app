@@ -31,7 +31,7 @@ const ProgressStep = ({
           <MdDone size={16} />
         </i>
       )}
-      <h4>{stepTitle}</h4>
+      <span>{stepTitle}</span>
     </button>
   );
 };

@@ -9,20 +9,25 @@ interface newRouteState {
   author: string; // userId
   imageUrl: string;
   routeLocation: Location | null;
-  routeCoordinates: number[][];
+  path: number[][];
   // filteredGenres: string[] | [];
+}
+
+interface InputChange {
+  key: string;
+  value: any;
 }
 
 const initialState: newRouteState = {
   //W initialGenres: genres,
   title: "",
   description: "",
-  difficulty: null,
+  difficulty: 14,
   features: [],
   author: "",
   imageUrl: "",
   routeLocation: null,
-  routeCoordinates: [],
+  path: [],
 };
 
 export const newRouteSlice = createSlice({
@@ -36,7 +41,7 @@ export const newRouteSlice = createSlice({
       state.routeLocation = action.payload;
     },
     setRoute: (state, action: PayloadAction<number[][]>) => {
-      state.routeCoordinates = action.payload;
+      state.path = action.payload;
       // filter out all empty arrays
       // const onlyFullArrs = state.jointCoords.filter(
       //   (joint) => joint.length > 1
@@ -46,15 +51,30 @@ export const newRouteSlice = createSlice({
     setAuthor: (state, action: PayloadAction<string>) => {
       state.author = action.payload;
     },
-    setRouteDetails: (state, action: PayloadAction<Record<string, any>>) => {
-      const { title, description, grade, features } = action.payload;
-      state.title = title;
-      state.description = description;
-      state.difficulty = +grade;
-      state.features = features;
+    setRouteName: (state, action: PayloadAction<string>) => {
+      action.payload;
+
+      state.title = action.payload;
     },
+    setRouteGrade: (state, action: PayloadAction<string>) => {
+      action.payload;
+
+      state.difficulty = +action.payload;
+    },
+    setRouteFeatures: (state, action: PayloadAction<string>) => {
+      if (!state.features.includes(action.payload)) {
+        state.features.push(action.payload);
+      } else {
+        const tempFeatures = [...state.features];
+        const filteredFeatures = tempFeatures.filter(
+          (f) => f !== action.payload
+        );
+        state.features = filteredFeatures;
+      }
+    },
+
     updateJointCoords: (state, action: PayloadAction<number[][]>) => {
-      state.routeCoordinates = action.payload;
+      state.path = action.payload;
     },
   },
   extraReducers: {},
@@ -62,11 +82,13 @@ export const newRouteSlice = createSlice({
 
 export const {
   setImageUrl,
-  setRouteDetails,
+  setRouteName,
   setRouteLocation,
   setRoute,
   updateJointCoords,
   setAuthor,
+  setRouteGrade,
+  setRouteFeatures,
 } = newRouteSlice.actions;
 
 export default newRouteSlice.reducer;

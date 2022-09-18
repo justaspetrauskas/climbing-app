@@ -56,7 +56,6 @@ const Map = ({ mapClickHandler, children }: MapProps) => {
   }, []);
 
   const onMarkerLoad = useCallback((marker: googleMapsMarker) => {
-    console.log("marker is loaded");
     setMarker(marker);
   }, []);
   const onMarkerUnmount = useCallback(() => {
@@ -70,6 +69,12 @@ const Map = ({ mapClickHandler, children }: MapProps) => {
       if (mapClickHandler) mapClickHandler(e);
     }
   };
+
+  useEffect(() => {
+    if (map && routeLocation) {
+      map.panTo(routeLocation);
+    }
+  }, [routeLocation]);
 
   useEffect(() => {
     if (!marker) {

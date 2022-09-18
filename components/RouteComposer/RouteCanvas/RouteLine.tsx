@@ -7,11 +7,10 @@ import { drawLine } from "../../../lib/canvasTools";
 interface RouteLineProps {
   jointCoords: number[][];
   lineColor: string;
-  lineClick: (e?: any) => void;
 }
 const RouteLine = ({
   jointCoords,
-  lineClick,
+
   lineColor = "blue",
 }: RouteLineProps) => {
   const lineRef = useRef<Konva.Line>(null);
@@ -35,7 +34,6 @@ const RouteLine = ({
       shadowColor="white"
       shadowBlur={2}
       strokeWidth={3}
-      onClick={lineClick}
     />
   );
 };

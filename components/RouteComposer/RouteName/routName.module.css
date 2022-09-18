@@ -1,0 +1,8 @@
+.container {
+  @apply w-full h-full flex flex-col items-center justify-center;
+}
+.composer-input {
+  @apply w-full mx-12 bg-transparent border-b
+  px-2 text-center text-2xl
+  border-primary_green;
+}

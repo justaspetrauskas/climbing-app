@@ -16,9 +16,13 @@
   } */
 
 .progress-step {
-  @apply relative min-w-[8rem] flex py-2 px-4 rounded-md
+  @apply relative w-full flex py-2 px-4 rounded-md
      font-semibold text-primary_white
     flex-nowrap items-center gap-x-2 flex-row;
+}
+
+.progress-step > span {
+  @apply w-full text-left;
 }
 
 .progress-step:not(.progress-step--active) {
@@ -48,7 +52,7 @@
 i.step-completed {
   @apply border 
   overflow-hidden
-  rounded-full p-[0.15rem] border-urban_white transition;
+  rounded-full min-w-[2rem] h-8 p-[0.15rem] flex flex-col items-center justify-center border-urban_white transition;
   animation: 300ms ease-in-out 0s 1 slideInFromBottom;
 }
 i.step-completed > svg {

@@ -1,10 +1,11 @@
-import mongoose, { Document, model, Model } from "mongoose";
+import mongoose, { Document, model, Model, Types } from "mongoose";
 import bcrypt from "bcrypt";
 import { AvatarGenerator } from "random-avatar-generator";
 
 const avatar = new AvatarGenerator();
 const Schema = mongoose.Schema;
-export interface IUser extends Document {
+
+export interface IUser {
   name: string;
   email: string;
   password: string;
@@ -92,5 +93,5 @@ userSchema.statics.checkCredentials = async function (email, plainpassword) {
 
 const User =
   mongoose.models.UserSchema ||
-  mongoose.model<IUserDocument, IUserModel>("UserSchema", userSchema);
+  model<IUser, IUserModel>("UserSchema", userSchema);
 export default User;

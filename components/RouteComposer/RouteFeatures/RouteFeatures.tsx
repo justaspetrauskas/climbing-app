@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setRouteFeatures } from "../../../redux/slices/newRouteReducer";
+import {
+  goToNextStep,
+  setValidateStep,
+} from "../../../redux/slices/routeComposerReducer";
+import { selectNewRouteState } from "../../../redux/store";
+import Button from "../../UILayout/Button/Button";
 import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
+import FormLayout from "../FormLayout";
 import style from "./routeFeatures.module.css";
 import SingleFeature from "./SingleFeature";
 
-const features = [
+const availableFeatures = [
   "morpho",
   "dyno",
   "sketchy topping",
@@ -12,27 +21,63 @@ const features = [
   "tall",
   "slab",
   "very overhang",
+  "sit start",
+  "crimbs",
+  "slopers",
+  "pumpy",
+  "scary",
+  "cave",
+  "mossy",
+  "sharp",
 ];
 
-interface RouteFeaturesProps {
-  featureVals: [string];
-  selectHandler: (feature: string) => void;
-}
+const RouteFeatures = () => {
+  const { features } = useSelector(selectNewRouteState);
+  const dispatch = useDispatch();
 
-const RouteFeatures = ({ featureVals, selectHandler }: RouteFeaturesProps) => {
+  useEffect(() => {
+    if (features.length > 1) {
+      dispatch(setValidateStep(true));
+    } else {
+      dispatch(setValidateStep(false));
+    }
+  }, [features]);
+
+  const handleSelect = (feature: string) => {
+    dispatch(setRouteFeatures(feature));
+
+    // if (features.includes(feature)) {
+    //   const tempFeatures = [...features];
+    //   const filteredFeatures = tempFeatures.filter((f) => f !== feature);
+    //   dispatch(setRouteFeatures(filteredFeatures));
+    // }
+  };
+
   return (
-    <InputFieldContainer label={"Route features"}>
-      <div className={style.wrapper}>
-        {features.map((feature, index) => (
-          <SingleFeature
-            key={index}
-            selected={featureVals ? featureVals.includes(feature) : false}
-            feature={feature}
-            selectHandler={(feature: string) => selectHandler(feature)}
-          />
-        ))}
+    <FormLayout>
+      <div className="flex flex-col justify-center gap-y-8 h-full">
+        <span className="text-xl font-semibold text-center">
+          Select min 2 features, which best describe your route
+        </span>
+        <div className={style.wrapper}>
+          {availableFeatures.map((feature, index) => (
+            <SingleFeature
+              key={index}
+              selected={features ? features.includes(feature) : false}
+              feature={feature}
+              selectHandler={(feature: string) => handleSelect(feature)}
+            />
+          ))}
+        </div>
+        {features.length > 1 && (
+          <span className="mx-auto">
+            <Button clickHandler={(e) => dispatch(goToNextStep())}>
+              Confirm
+            </Button>
+          </span>
+        )}
       </div>
-    </InputFieldContainer>
+    </FormLayout>
   );
 };
 

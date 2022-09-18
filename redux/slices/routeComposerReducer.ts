@@ -4,7 +4,6 @@ interface Step {
   label: string;
   active: boolean;
   validated: boolean;
-  stepIndex: number;
 }
 
 interface routeComposerState {
@@ -17,24 +16,40 @@ interface routeComposerState {
 
 const formSteps: Step[] = [
   {
-    label: "Route Description",
+    label: "Image of the crag",
     active: false,
     validated: false,
-    stepIndex: 1,
+  },
+  {
+    label: "Draw a problem",
+    active: false,
+    validated: false,
+  },
+  {
+    label: "Name it",
+    active: false,
+    validated: false,
+  },
+  {
+    label: "Give it a Grade",
+    active: false,
+    validated: false,
+  },
+  {
+    label: "Route Features",
+    active: false,
+    validated: false,
   },
   {
     label: "Route Location",
     active: false,
     validated: false,
-    stepIndex: 2,
   },
   {
-    label: "Upload a picture",
+    label: "Aditional notes",
     active: false,
     validated: false,
-    stepIndex: 3,
   },
-  { label: "Draw a problem", active: false, validated: false, stepIndex: 4 },
 ];
 
 const initialState: routeComposerState = {
@@ -84,8 +99,12 @@ export const routeComposerSlice = createSlice({
     },
     setValidateStep: (state, action: PayloadAction<boolean>) => {
       // check if current stepIndex is not larger than the length of steps
-      const activeStepIndex = state.activeStep.stepIndex;
-      state.steps[activeStepIndex - 1].validated = action.payload;
+
+      const activeStepIndex = state.steps.findIndex(
+        (o) => o.label === state.activeStep.label
+      );
+
+      state.steps[activeStepIndex].validated = action.payload;
       state.activeStep.validated = action.payload;
     },
   },

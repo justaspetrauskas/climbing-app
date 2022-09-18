@@ -1,18 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FileError, FileRejection, useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { setImagePreview } from "../../redux/slices/imageUploadReducer";
+import { setImageUrl } from "../../../redux/slices/newRouteReducer";
 
-import style from "./dropzone.module.css";
+import style from "./imageUpload.module.css";
 
 interface UploadableFile {
   file: File;
   errors: FileError[];
 }
-interface DropZoneProps {
-  onLoadHandler?: () => void;
-}
-const DropZone = ({ onLoadHandler }: DropZoneProps) => {
+interface DropZoneProps {}
+const DropZone = () => {
   const dispatch = useDispatch();
   const [file, setFile] = useState<UploadableFile | null>(null);
   const onDrop = useCallback((accFiles: File[], rejFiles: FileRejection[]) => {
@@ -31,7 +29,7 @@ const DropZone = ({ onLoadHandler }: DropZoneProps) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         // store image data
-        dispatch(setImagePreview(reader.result as string));
+        dispatch(setImageUrl(reader.result as string));
         // openModal();
       };
       reader.readAsDataURL(file.file);
@@ -40,7 +38,7 @@ const DropZone = ({ onLoadHandler }: DropZoneProps) => {
   }, [file]);
 
   return (
-    <div className={style.wrapper} {...getRootProps()}>
+    <div className={style["dropzone-container"]} {...getRootProps()}>
       <input {...getInputProps()} />
       <p> Drag and drop some files her or click to select files</p>
     </div>

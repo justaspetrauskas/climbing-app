@@ -64,6 +64,7 @@ const useForm = () => {
     const { name, value } = e.target;
 
     validate(e, name, value);
+
     setValues({ ...values, [name]: value });
   };
 

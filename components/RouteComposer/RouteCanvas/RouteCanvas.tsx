@@ -2,9 +2,7 @@ import React, { useRef, useLayoutEffect, useEffect, useState } from "react";
 import style from "./routeCanvas.module.css";
 // konva
 import Konva from "konva";
-import { Stage, Layer, Line, Image, Text } from "react-konva";
-import { useSession } from "next-auth/react";
-import ImageLayer from "./ImageLayer";
+import { Stage, Layer } from "react-konva";
 import RouteLine from "./RouteLine";
 import RouteJoints from "./RouteJoints";
 import {
@@ -17,7 +15,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import {
   setJointCoords,
-  setValidated,
   updateJointCoords,
 } from "../../../redux/slices/canvasState";
 import { setRoute } from "../../../redux/slices/newRouteReducer";
@@ -30,15 +27,21 @@ import FormLayout from "../FormLayout";
 import CanvasControls from "./CanvasControls";
 import InputFieldContainer from "../../UILayout/InputFieldContainer/InputFieldContainer";
 import CanvasExplanation from "./CanvasExplanation";
-import { setValidateStep } from "../../../redux/slices/routeComposerReducer";
+import {
+  goToNextStep,
+  setValidateStep,
+} from "../../../redux/slices/routeComposerReducer";
+import Button from "../../UILayout/Button/Button";
 
 const radiusMultiplier: number = 1.8;
 const lineColor: string = "#274546";
 const jointColor: string = "#ffd447";
 
 function RouteCanvas() {
-  const session = useSession();
   const { imageUrl } = useSelector(selectNewRouteState);
+  const { activeStep, steps, currentStepIndex } = useSelector(
+    selectRouteComposerState
+  );
 
   const dispatch = useDispatch();
   const { jointCoords, howToEdit, editMode } = useSelector(selectCanvasState);
@@ -159,14 +162,9 @@ function RouteCanvas() {
     if (isWithinCanvasEl) setWithinCanvasEl(isWithinCanvasEl);
   };
 
-  const handleLineClick = (e: any) => {
-    // find position where clicked happend
-    const clickPos = e.target.getStage().getPointerPosition();
-    console.log("clicked on the line", clickPos);
-
-    // get current joint coords
-
-    // add points between neighbors
+  const handleFinishDrawing = () => {
+    dispatch(setRoute(jointCoords));
+    dispatch(goToNextStep());
   };
 
   if (imageUrl) {
@@ -189,11 +187,7 @@ function RouteCanvas() {
             onClick={handleClick}
           >
             <Layer>
-              <RouteLine
-                lineColor={lineColor}
-                lineClick={handleLineClick}
-                jointCoords={translatedCoords}
-              />
+              <RouteLine lineColor={lineColor} jointCoords={translatedCoords} />
             </Layer>
             <Layer>
               {translatedCoords.length > 0 &&
@@ -220,6 +214,13 @@ function RouteCanvas() {
                 ))}
             </Layer>
           </Stage>
+        </div>
+        <div className="py-2 flex justify-end">
+          {activeStep.validated && (
+            <Button type="Primary" clickHandler={handleFinishDrawing}>
+              Finish Drawing
+            </Button>
+          )}
         </div>
       </FormLayout>
     );

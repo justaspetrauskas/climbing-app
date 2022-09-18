@@ -37,7 +37,6 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // await dbConnect();
     const { name, username, password, email } = JSON.parse(req.body);
-    console.log(req.body, email);
     //validation
     let validationResult = await validateForm(email, password);
     if (validationResult.success) {
@@ -45,9 +44,9 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
       await dbConnect();
       const newUser = new User(JSON.parse(req.body));
       const { accessToken, refreshToken } = await JWTAuthenticate(newUser);
-      console.log(accessToken, refreshToken);
+
       await newUser.save();
-      console.log("Saved User", newUser);
+      // console.log("Saved User", newUser);
       res.status(200).send({ accessToken, refreshToken });
     } else {
       return res.status(400).json(validationResult.error.issues);
@@ -57,11 +56,6 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (err) {
     console.log(err);
   }
-
-  // check if email existed
-  // if ((await req.db.collection('users').countDocuments({ email })) > 0) {
-  //   res.status(403).send('The email has already been used.');
-  // }
 });
 
 export default handler;

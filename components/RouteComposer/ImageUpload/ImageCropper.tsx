@@ -19,7 +19,6 @@ const ImageCropper = ({ imageSrc }: ImageCropperProps) => {
   const dispatch = useDispatch();
 
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
-
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
@@ -32,11 +31,10 @@ const ImageCropper = ({ imageSrc }: ImageCropperProps) => {
 
   const resetImage = (e: React.FormEvent<HTMLInputElement>) => {
     const imageFile = (e.target as HTMLInputElement).files;
-    console.log("Reset image file", imageFile);
     const reader = new FileReader();
     reader.onloadend = () => {
       // store image data
-      dispatch(setImagePreview(reader.result as string));
+      dispatch(setImageUrl(reader.result as string));
     };
     reader.readAsDataURL(imageFile![0]);
   };

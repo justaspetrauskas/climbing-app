@@ -22,7 +22,7 @@ const ProgressInfo = () => {
       <div className={style["progress-container"]}>
         {steps.map((step, index) => (
           <ProgressStep
-            key={step.stepIndex}
+            key={index}
             completed={step.validated}
             stepTitle={step.label}
             active={index === currentStepIndex}

@@ -1,17 +1,32 @@
-import mongoose, { Document, model, Model, Schema } from "mongoose";
+import mongoose, {
+  Document,
+  model,
+  Model,
+  PopulatedDoc,
+  Schema,
+  Types,
+} from "mongoose";
+import { IUser, IUserModel, IUserDocument } from "./User";
 
-export interface IRoute extends Document {
+export interface IRoute {
   title: string;
   routeLocation: { lat: number; lng: number };
   description: string;
   difficulty: number;
   features: string[];
   path: number[][];
-  author: string;
+  author: Types.ObjectId;
   imageUrl: string;
 }
 
-const routeSchema: Schema = new Schema(
+export interface IRouteDocument extends IRoute, Document {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IRouteModel extends Model<IRoute> {}
+
+const routeSchema = new Schema<IRoute, IRouteDocument, IRouteModel>(
   {
     title: {
       type: String,
@@ -33,42 +48,6 @@ const routeSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-// routeSchema.pre("save", async function (next) {
-//   const route = this;
-//   let gradeVal = route.diffculty.value;
-//   const frenchGrades = [
-//     "4a",
-//     "4b",
-//     "4c",
-//     "5a",
-//     "5b",
-//     "5c",
-//     "6a",
-//     "6a+",
-//     "6b",
-//     "6b+",
-//     "6c",
-//     "6c+",
-//     "7a",
-//     "7a+",
-//     "7b",
-//     "7b+",
-//     "7c",
-//     "7c+",
-//     "8a",
-//     "8a+",
-//     "8b",
-//     "8b+",
-//     "8c",
-//     "8c+",
-//     "9a",
-//     "9a+",
-//     "9b",
-//   ];
-//   route.diffculty.label = frenchGrades[gradeVal - 1];
-//   next();
-// });
-
-const Route: Model<IRoute> =
-  mongoose.models.Route || model("Route", routeSchema);
+const Route =
+  mongoose.models.Route || model<IRoute, IRouteModel>("Route", routeSchema);
 export default Route;

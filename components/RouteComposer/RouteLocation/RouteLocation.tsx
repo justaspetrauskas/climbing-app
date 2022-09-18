@@ -11,7 +11,10 @@ import { setRouteLocation } from "../../../redux/slices/newRouteReducer";
 import MapComponent from "./MapComponent";
 import Button from "../../UILayout/Button/Button";
 import { setUserLocation } from "../../../redux/slices/mapLocationReducer";
-import { setValidateStep } from "../../../redux/slices/routeComposerReducer";
+import {
+  goToNextStep,
+  setValidateStep,
+} from "../../../redux/slices/routeComposerReducer";
 
 const validLatitude = new RegExp("^[-+]?([1-8]?[1-9]|[1-9]0)\\.{1}\\d{1,18}$");
 const validLongitude = new RegExp(
@@ -57,12 +60,15 @@ const RouteLocation = () => {
     } else {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        console.log(position);
         dispatch(setUserLocation({ lat: latitude, lng: longitude }));
         // dispatch(setCurrentLocation({ lat: latitude, lng: longitude }));
       });
     }
   }, []);
+
+  useEffect(() => {
+    getUsersLocation();
+  }, [navigator.geolocation]);
 
   const cordinateChangeHandler = (
     type: "latitude" | "longitude",
@@ -80,7 +86,7 @@ const RouteLocation = () => {
         isValidDot && setLatitude(inputValue);
         break;
       case "longitude":
-        isValidDot && setLongitude(e.target.value);
+        isValidDot && setLongitude(inputValue);
         break;
     }
   };
@@ -88,6 +94,8 @@ const RouteLocation = () => {
   const locateMe = (e: MouseEvent) => {
     // e.preventDefault();
     getUsersLocation();
+    console.log(userLocation);
+    dispatch(setRouteLocation(userLocation!));
   };
 
   return (
@@ -119,11 +127,18 @@ const RouteLocation = () => {
       <InputFieldContainer label={"...or choose on the map..."}>
         <div className="inline-block float-right">
           <Button type="Primary" size="sm" clickHandler={locateMe}>
-            Locate me
+            Use my current location
           </Button>
         </div>
 
         <MapComponent />
+        {routeLocation && (
+          <div className="mt-12 flex flex-row justify-center">
+            <Button clickHandler={(e) => dispatch(goToNextStep())}>
+              Confirm
+            </Button>
+          </div>
+        )}
       </InputFieldContainer>
     </FormLayout>
   );

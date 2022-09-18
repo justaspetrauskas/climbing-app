@@ -1,3 +1,4 @@
 .wrapper {
-  @apply flex flex-row flex-wrap gap-x-1 gap-y-2;
+  @apply flex flex-row flex-wrap
+  gap-x-1 gap-y-2;
 }

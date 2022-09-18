@@ -11,7 +11,7 @@ const RouteComposer = () => {
       <ProgressInfo />
       {/* steps */}
       <RouteSteps />
-      <ComposerControls />
+      {/* <ComposerControls /> */}
     </div>
   );
 };
