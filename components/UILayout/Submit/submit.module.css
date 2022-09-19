@@ -1,3 +1,101 @@
 .submit-btn {
-  @apply;
+  @apply relative px-7 py-[0.5rem] text-center 
+    text-base font-[600] rounded-br-xl rounded-tl-xl
+    cursor-pointer transition duration-300 shadow-md overflow-hidden
+    flex flex-row gap-x-8 items-center justify-between flex-nowrap;
+}
+.submit-loader {
+  @apply flex items-center justify-center w-8 h-8 rounded-full
+  transition duration-300
+
+  border border-primary_green border-t border-t-primary_white;
+}
+.submit-loader.active:not(.submit-completed) {
+  -webkit-animation: loading 2s ease-in-out;
+  animation: loading 2s ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+.submit-btn.active {
+  @apply bg-primary_green text-primary_white;
+}
+/* .submit-btn::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  background: #cecd24;
+  transition: 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1),
+    left 0.3s cubic-bezier(0.1, 0, 0.1, 1);
+  z-index: 2;
+}
+
+.submit-btn:hover::before {
+  left: calc(100% - 3em);
+  right: 0;
+  transition: 0.3s cubic-bezier(0.1, 0, 0.1, 1),
+    left 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
+} */
+.submit-completed {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+.submit-completed.active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: all 0.5s cubic-bezier(0.04, 1.08, 0.67, 1.31);
+  transition-delay: 0.2s;
+}
+
+.submit-btn:hover:not(.submit-btn.active) {
+  @apply shadow-light 
+    transition duration-300 shadow-primary_darkGrey;
+}
+.submit-primary {
+  @apply bg-primary_green text-primary_white;
+}
+.submit-primary:hover:not(.submit-btn.active) {
+  @apply shadow-primary_green bg-primary_white text-primary_green;
+}
+
+@-webkit-keyframes loading {
+  30% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+    transform: rotate(1080deg);
+    border-color: #274546;
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(1080deg);
+    border-color: rgb(251 248 243);
+  }
+}
+
+@keyframes loading {
+  30% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+    transform: rotate(1080deg);
+    border-color: #274546;
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(1080deg);
+    border-color: rgb(251 248 243);
+  }
 }

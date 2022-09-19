@@ -72,6 +72,9 @@ export const newRouteSlice = createSlice({
         state.features = filteredFeatures;
       }
     },
+    setRouteDescription: (state, action: PayloadAction<string>) => {
+      state.description = action.payload;
+    },
 
     updateJointCoords: (state, action: PayloadAction<number[][]>) => {
       state.path = action.payload;
@@ -89,6 +92,7 @@ export const {
   setAuthor,
   setRouteGrade,
   setRouteFeatures,
+  setRouteDescription,
 } = newRouteSlice.actions;
 
 export default newRouteSlice.reducer;

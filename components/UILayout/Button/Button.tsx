@@ -23,7 +23,6 @@ const Button = ({
   active = false,
 }: ButtonProps) => {
   const buttonClickHandler = () => {
-    console.log("i'm here", disabled);
     if (clickHandler) {
       clickHandler();
     }
