@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import MainContainer from "../../components/MainContainer/MainContainer";
+import MainContainer from "../../components/UILayout/MainContainer/MainContainer";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import SignInForm from "../../components/FormElements/SignInForm";
 

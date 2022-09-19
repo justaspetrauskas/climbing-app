@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import User, { IUser } from "../models/User";
+import User, { IUser, IUserModel } from "../models/User";
 
-export const JWTAuthenticate = async (user: IUser) => {
+export const JWTAuthenticate = async (user: any) => {
   const accessToken = await generateJWT({ _id: user._id });
   const refreshToken = await generateRefreshJWT({ _id: user._id });
 

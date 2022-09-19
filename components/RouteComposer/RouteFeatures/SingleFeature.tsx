@@ -1,5 +1,5 @@
 import React from "react";
-import PillButton from "../../PillButton/PillButton";
+import PillButton from "../../UILayout/PillButton/PillButton";
 import style from "./routeFeatures.module.css";
 
 interface SingleFeatureProps {

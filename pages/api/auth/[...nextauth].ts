@@ -18,6 +18,7 @@ export const authOptions: NextAuthOptions = {
     }),
     // Email & Password
     CredentialsProvider({
+      type: "credentials",
       id: "credentials",
       name: "Credentials",
       credentials: {
@@ -36,6 +37,8 @@ export const authOptions: NextAuthOptions = {
         // Find user with the email
 
         // Check hased password with DB hashed password
+        console.log(credentials!.email);
+
         //@ts-ignore
         const user = await User.checkCredentials(
           credentials!.email,
@@ -58,18 +61,26 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.JWT_SECRET!,
   pages: {
     signIn: "/session/new",
+    signOut: "/session/signOut",
   },
   callbacks: {
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
         token.id = user.id;
       }
+      if (account) {
+        token.accessToken = account.access_token;
+      }
       return token;
     },
     async session({ session, token, user }) {
       if (session?.user) {
+        await dbConnect();
+        const user = await User.findById(token.id);
+        console.log("found user", user);
+
         // @ts-ignore
-        session.user.id = token.id;
+        session.user = user;
       }
 
       return session;

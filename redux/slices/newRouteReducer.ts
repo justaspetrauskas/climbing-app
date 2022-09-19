@@ -19,7 +19,6 @@ interface InputChange {
 }
 
 const initialState: newRouteState = {
-  //W initialGenres: genres,
   title: "",
   description: "",
   difficulty: 14,
@@ -42,11 +41,6 @@ export const newRouteSlice = createSlice({
     },
     setRoute: (state, action: PayloadAction<number[][]>) => {
       state.path = action.payload;
-      // filter out all empty arrays
-      // const onlyFullArrs = state.jointCoords.filter(
-      //   (joint) => joint.length > 1
-      // );
-      // state.jointCoords = onlyFullArrs;
     },
     setAuthor: (state, action: PayloadAction<string>) => {
       state.author = action.payload;
@@ -75,7 +69,16 @@ export const newRouteSlice = createSlice({
     setRouteDescription: (state, action: PayloadAction<string>) => {
       state.description = action.payload;
     },
-
+    setInitRouteState: (state) => {
+      state.title = "";
+      state.description = "";
+      state.difficulty = 14;
+      state.features = [];
+      state.author = "";
+      state.imageUrl = "";
+      state.routeLocation = null;
+      state.path = [];
+    },
     updateJointCoords: (state, action: PayloadAction<number[][]>) => {
       state.path = action.payload;
     },
@@ -93,6 +96,7 @@ export const {
   setRouteGrade,
   setRouteFeatures,
   setRouteDescription,
+  setInitRouteState,
 } = newRouteSlice.actions;
 
 export default newRouteSlice.reducer;

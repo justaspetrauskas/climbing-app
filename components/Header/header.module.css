@@ -1,5 +1,31 @@
 .wrapper {
-  @apply fixed top-0 left-0 w-full z-[99] bg-urban_white text-urban_blue border-b border-urban_black/5 py-4;
+  @apply fixed top-0 left-0 
+  w-full z-[99] bg-[#F5F7FA]
+   text-primary_green border-b border-primary_darkGrey/5 py-4;
+}
+
+.nav-container {
+  @apply flex items-center justify-end;
+}
+
+.image-container {
+  @apply w-10 h-10 relative rounded-full border
+   border-primary_white;
+}
+.image-container > image {
+  @apply w-full h-auto;
+}
+
+.nav-button {
+  @apply flex mr-3 text-sm rounded-full
+  flex-row items-center
+  shadow-lg
+  border border-primary_green pl-4 font-semibold
+  md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600;
+}
+
+.nav-button i {
+  @apply py-1 px-3;
 }
 
 .navbar {
@@ -39,6 +65,12 @@
 }
 
 /* dropwdown */
+
+.dropdown-container {
+  @apply z-50 my-4 text-base list-none bg-white rounded divide-y
+   divide-gray-100 shadow dark:bg-gray-700
+    dark:divide-gray-600;
+}
 .dropdownWrapper {
   @apply bg-urban_white absolute min-w-[8rem] border 
   border-urban_blue/10 shadow-md uppercase text-xs break-normal

@@ -1,5 +1,5 @@
 .wrapper {
-  @apply w-1/3 bg-slate-900;
+  @apply hidden md:block md:w-1/3 bg-slate-900;
 }
 
 .sidebar-content {

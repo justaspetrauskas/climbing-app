@@ -1,8 +1,14 @@
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setRouteDescription } from "../../../redux/slices/newRouteReducer";
-import { setValidateStep } from "../../../redux/slices/routeComposerReducer";
+import {
+  setInitRouteState,
+  setRouteDescription,
+} from "../../../redux/slices/newRouteReducer";
+import {
+  setInitSteps,
+  setValidateStep,
+} from "../../../redux/slices/routeComposerReducer";
 import {
   selectNewRouteState,
   selectRouteComposerState,
@@ -90,6 +96,8 @@ const RouteNotes = () => {
           console.log(reponseJson);
           // setState(completed)
           setUploadStatus("completed");
+          dispatch(setInitRouteState());
+          dispatch(setInitSteps());
           router.push("/");
         }
       }

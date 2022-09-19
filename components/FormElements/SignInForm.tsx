@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-
 import React, { useEffect, useState } from "react";
 import { useForm, UseFormRegister } from "react-hook-form";
 
@@ -8,6 +7,7 @@ import style from "../../styles/signUpForm.module.css";
 import IconButton from "../IconButton/IconButton";
 import InputField from "./InputField";
 import { GetServerSideProps } from "next";
+import { signIn } from "next-auth/react";
 
 export interface ValidationRules {
   required?: boolean;
@@ -44,7 +44,16 @@ const SignInForm = () => {
     mode: "onChange", // "onChange"
   });
 
-  const onSubmit = (data: Record<string, any>) => console.log(data);
+  const onSubmit = async (data: Record<string, any>) => {
+    const { email, password } = data;
+    console.log(data);
+    // hash the password
+    await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: true,
+    });
+  };
 
   return (
     <div className={style.wrapper}>
@@ -66,8 +75,8 @@ const SignInForm = () => {
             <InputField
               inputType="text"
               required={true}
-              label="username or email address"
-              formfield={"username"}
+              label="email address"
+              formfield={"email"}
               placeholderText={"what will you be"}
               registerField={register}
               validationRules={{ required: true, maxLength: 100 }}

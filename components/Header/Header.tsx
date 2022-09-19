@@ -1,18 +1,21 @@
+import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 import React from "react";
-import style from "../../styles/header.module.css";
+import style from "./header.module.css";
 import Navigation from "./Navigation";
 
 const Header = () => {
+  const { data: session, status } = useSession();
   return (
-    <header className={style.wrapper}>
+    <nav className={style.wrapper}>
       <div className={style.navbar}>
         <div className={style.logo}>
           <span>Urban</span>
           <span>Crush</span>
         </div>
-        <Navigation />
+        <Navigation session={session} />
       </div>
-    </header>
+    </nav>
   );
 };
 

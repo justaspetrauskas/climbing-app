@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { useSession, signIn, signOut, getSession } from "next-auth/react";
 import Router, { useRouter } from "next/router";
 import clientPromise from "../lib/dbConnect";
@@ -7,26 +7,25 @@ import Google from "next-auth/providers/google";
 import Header from "../components/Header/Header";
 import { useEffect, useState } from "react";
 import HomePage from "../components/Homepage/HomePage";
+import { Session } from "next-auth";
 
 interface HomeProps {
   isConnected: boolean;
+  lines: any[];
 }
 
-const Home = ({ isConnected }: HomeProps) => {
+const Home = ({ isConnected, lines }: HomeProps) => {
   const router = useRouter();
-  // const { data: session, status } = useSession();
   const [loading, setLoading] = useState<boolean>(true);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
-    const securePage = async () => {
-      const session = await getSession();
-      !session ? signIn() : setLoading(false);
+    console.log(lines);
+  }, [lines]);
 
-      console.log(session);
-    };
-
-    securePage();
-  }, []);
+  useEffect(() => {
+    lines && setLoading(false);
+  }, [lines]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -57,29 +56,43 @@ const Home = ({ isConnected }: HomeProps) => {
   //   </>
   // );
 };
-
-export async function getServerSideProps() {
-  try {
-    await clientPromise;
-    console.log("db connected to server");
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
-
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const response = await fetch("http://localhost:3000/api/lines");
+  if (response.ok) {
+    const lines = await response.json();
     return {
-      props: { isConnected: true },
+      props: {
+        lines,
+      },
     };
-  } catch (e) {
-    console.error(e);
+  } else {
     return {
-      props: { isConnected: false },
+      redirect: {
+        destination: "/notfound",
+        permanent: false,
+      },
     };
   }
-}
+  // if (serverSession) {
+
+  //   // get /user/me
+  //   const response = await fetch("http://localhost:3000/api/user/me");
+  // }
+
+  // if (!serverSession) {
+  //   return {
+  //     redirect: {
+  //       destination: "/session/new?callbackUrl=http://localhost:3000/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
+  // return {
+  //   props: {
+  //     serverSession,
+  //   }, // will be passed to the page component as props
+  // };
+};
 
 export default Home;

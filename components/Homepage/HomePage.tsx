@@ -6,9 +6,9 @@ interface HomePageProps {
   isConnected: boolean;
 }
 const HomePage = ({ isConnected }: HomePageProps) => {
-  useEffect(() => {
-    console.log(isConnected);
-  }, []);
+  // useEffect(() => {
+  //   console.log(isConnected);
+  // }, []);
 
   return (
     <PageLayout>

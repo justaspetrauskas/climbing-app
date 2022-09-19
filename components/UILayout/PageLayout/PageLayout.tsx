@@ -12,12 +12,12 @@ const PageLayout = ({ children }: PageLayoutProp) => {
   const router = useRouter();
 
   //   make into a hook
-  useEffect(() => {
-    // depending on the route give a specific suffix
-    // maybe slug
+  // useEffect(() => {
+  //   // depending on the route give a specific suffix
+  //   // maybe slug
 
-    console.log(router.pathname.split("/"));
-  }, []);
+  //   console.log(router.pathname.split("/"));
+  // }, []);
 
   return (
     <div className={style.wrapper}>

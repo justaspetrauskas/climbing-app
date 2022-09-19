@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { selectRouteComposerState } from "../../redux/store";
 import ImageUpload from "./ImageUpload/ImageUpload";
 
-import RouteDetailsForm from "./RouteDetails/RouteDetailsForm";
 import RouteFeatures from "./RouteFeatures/RouteFeatures";
 import RouteGrade from "./RouteGrade/RouteGrade";
 import RouteLocation from "./RouteLocation/RouteLocation";

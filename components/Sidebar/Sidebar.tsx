@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 import headerImg from "../../public/images/rolf-blicher-godfrey.jpg";
-import style from "../../styles/sidebar.module.css";
+import style from "./sidebar.module.css";
 import SignUpForm from "../FormElements/SignUpForm";
 
 const Sidebar = () => {
@@ -19,7 +19,7 @@ const Sidebar = () => {
             // width="100%"
             // height="100%"
             placeholder="blur"
-            layout="fixed"
+            layout="fill"
             objectFit="cover"
           />
         </div>

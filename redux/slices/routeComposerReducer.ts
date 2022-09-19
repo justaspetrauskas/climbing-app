@@ -107,9 +107,17 @@ export const routeComposerSlice = createSlice({
       state.steps[activeStepIndex].validated = action.payload;
       state.activeStep.validated = action.payload;
     },
+    setInitSteps: (state) => {
+      state.steps = formSteps;
+    },
   },
 });
 
-export const { goToNextStep, goToPrevStep, goToStep, setValidateStep } =
-  routeComposerSlice.actions;
+export const {
+  goToNextStep,
+  goToPrevStep,
+  goToStep,
+  setValidateStep,
+  setInitSteps,
+} = routeComposerSlice.actions;
 export default routeComposerSlice.reducer;
